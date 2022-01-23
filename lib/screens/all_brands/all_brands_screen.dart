@@ -2,24 +2,16 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
-import 'package:nibton_app/screens/categories/categories_component/component.dart';
-import 'package:nibton_app/screens/filtter/filtter_class.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/states.dart';
-import 'package:nibton_app/screens/menu_screens/profile/get_profile_cubit/states.dart';
 import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
-import 'package:nibton_app/screens/product_detail/product_detail_screen.dart';
-import 'package:nibton_app/screens/see_all/component/compoenet.dart';
 import 'package:nibton_app/screens/see_all/sell_all_screen.dart';
-
 import 'package:sizer/sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class AllBrands extends StatelessWidget {
-  // const AllBrands({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +56,20 @@ class AllBrands extends StatelessWidget {
                 primary: true,
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 2.w),
-                children: List.generate(HomeCubit.get(context).data.length, (index) => buildBrands(
-                    context: context,
-                    title: HomeCubit.get(context).data[index]['name'], pathImage: HomeCubit.get(context).data[index]['logo']),),
-
-                // itemCount: HomeCubit.get(context).data.length,
+                children: List.generate(HomeCubit.get(context).data.length, (index) =>
+                    InkWell(
+                      onTap: (){
+                        HomeCubit.get(context).getProducts(
+                           id: '',
+                          brandId: HomeCubit.get(context).data[index]['id'].toString()
+                        );
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeAllScreen(
+                        )));
+                      },
+                      child: buildBrands(
+                      context: context,
+                      title: HomeCubit.get(context).data[index]['name'], pathImage: HomeCubit.get(context).data[index]['logo']),
+                    ),),
               ),
               fallback: (context)=>  Center(child: CircularProgressIndicator()),
               // child:

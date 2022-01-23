@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
-import 'package:nibton_app/models/all_offers.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,14 +11,14 @@ Widget buildOffersCard({
   required String image,
   context,
 })=>  Container(
-  height: 105,
+  height: 100,
   color: HexColor('#FFFFFF'),
   child: Row(
     children: [
       Container(
         color: HexColor('#4CB8BA'),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10,top: 10,right: 10),
+          padding: const EdgeInsets.only(left: 10,top: 8,right: 10,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,7 +28,7 @@ Widget buildOffersCard({
                   color: HexColor('#FFFFFF'),
                   fontFamily: 'OpenSans'
               ),),
-              SizedBox( height: 10,),
+              SizedBox( height: 5,),
               Text('${LocaleKeys.Price.tr()}:  $price | ${LocaleKeys.New_Price.tr()}: $newPrice   ',
                 style: TextStyle(
                     fontSize: 15,
@@ -37,7 +36,7 @@ Widget buildOffersCard({
                     color: HexColor('#FFFFFF'),
                     fontFamily: 'OpenSans',
                 ),),
-              SizedBox( height: 10,),
+              SizedBox( height: 5,),
               Text(LocaleKeys.All_Products.tr(),style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -79,7 +78,7 @@ Widget buildOffersCardRow({
         child: customCachedNetworkImage(url: image, context: context, fit: BoxFit.cover),
       ),
         Padding(
-          padding:  EdgeInsets.only(top: 23.h,left: 10,right: 10),
+          padding:  EdgeInsets.only(top: 23.h,left: 10,right: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,21 +88,21 @@ Widget buildOffersCardRow({
                 fontWeight: FontWeight.w600,
                 fontFamily: 'OpenSans'
               ),),
-              SizedBox(height: 5,),
+              SizedBox(height: 3,),
               Text('${LocaleKeys.Price.tr()}:  ' + price,style: TextStyle(
                   color: HexColor('FFFFFF'),
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'OpenSans'
               ),),
-              SizedBox(height: 5,),
+              // SizedBox(height: 2,),
               Text('${LocaleKeys.New_Price.tr()}:  ' + newPrice,style: TextStyle(
                   color: HexColor('FFFFFF'),
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'OpenSans'
               ),),
-              SizedBox(height: 5,),
+              // SizedBox(height: 3,),
             ],
           ),
         )

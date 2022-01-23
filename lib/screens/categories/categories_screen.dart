@@ -6,7 +6,6 @@ import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/states.dart';
-import 'package:nibton_app/screens/product_detail/product_detail_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:nibton_app/screens/see_all/sell_all_screen.dart';
 
@@ -63,6 +62,7 @@ class CategoriesScreen extends StatelessWidget {
                        itemBuilder: (context,index)=>InkWell(
                          onTap:(){
                            HomeCubit.get(context).getProducts(
+                               brandId: '',
                                id: HomeCubit.get(context).categories[index]['id'].toString());
                            Navigator.push(
                                context,
@@ -72,7 +72,7 @@ class CategoriesScreen extends StatelessWidget {
                                    )));
                          },
                          child: buildCategoriesCard(
-                             title: HomeCubit.get(context).categories[0]['title']),
+                             title: HomeCubit.get(context).categories[index]['title']),
                        ),
                        separatorBuilder: (context,index)=> Column(
                          children: [

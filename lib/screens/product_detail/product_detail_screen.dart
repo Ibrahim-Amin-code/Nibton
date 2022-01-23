@@ -1,13 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/cart/cart.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
-import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
-import 'package:nibton_app/screens/menu_screens/wish_list/component/wish_list_component.dart';
 import 'package:nibton_app/screens/product_detail/product_detail_component/product_description.dart';
 import 'package:nibton_app/screens/product_detail/product_detail_component/product_detail_component.dart';
 import 'package:sizer/sizer.dart';
@@ -16,9 +13,10 @@ import 'package:easy_localization/easy_localization.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
 
-  final dynamic details;
+    final dynamic details;
 
    ProductDetailsScreen({Key? key,required this.details}) : super(key: key);
+
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
 
@@ -30,9 +28,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List <Widget>image=[
-      Image.asset('assets/images/Image 40.png'),
-    ];
 
     List<Color> colors = [HexColor('#000000'), HexColor('#B5994565'), HexColor('#727C8E'),HexColor('#ED5199'),HexColor('#515C6F'),HexColor('#FF8C69'),HexColor('#4CB8BA'),HexColor('#FF9000')];
 

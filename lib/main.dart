@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nibton_app/screens/Authnitication/auth.dart';
 import 'package:nibton_app/screens/Authnitication/forgetPassword/cubit/cubit.dart';
 import 'package:nibton_app/screens/Authnitication/sign_in/login_cubit/cubit.dart';
 import 'package:nibton_app/screens/checkout/checkout_cubit/checkout_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/layout/cubit/cubit.dart';
 import 'package:nibton_app/screens/menu_screens/profile/update_profile_cubit/update_profle_cubit.dart';
+import 'package:nibton_app/screens/splash/splashScreen.dart';
 import 'package:sizer/sizer.dart';
 import 'generated/codegen_loader.g.dart';
 import 'network/bloc_observer.dart';
@@ -48,10 +48,11 @@ class MyApp extends StatelessWidget {
                     ..getShops()
                     ..getCategories()
                     ..contactInfo()
-                    ..getBrand()
+                    ..getBanners()
                     ..getCard()
-                    ..getAllProducts()
-                    ..getWishList()..getAllOffers()),
+                    ..getProducts(id: '',brandId: '')
+                    ..getWishList()
+                    ..getAllOffers()),
               BlocProvider<CheckoutCubit>(create: (context) => CheckoutCubit()..getAddresses()),
             ],
             child: MaterialApp(
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
                 return supportedLocales.first;
               },
               home: SafeArea(
-                child: AuthniticationScreen(),
+                child: Splash(),
               ),
             ));
       },
