@@ -24,7 +24,6 @@ import '../search_class.dart';
 class HomeScreen extends StatelessWidget {
   var searchController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context,index)=> InkWell(
                       onTap: () {
                         HomeCubit.get(context).getProducts(
-
+                            brandId: '',
                             id: HomeCubit.get(context).categories[index]['id'].toString());
                         Navigator.push(
                             context,
@@ -142,7 +141,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 2.h,),
-
           SizedBox(
             height: 33.h,
             child: ListView.separated(
@@ -150,12 +148,19 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   primary: true,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context,index)=>buildOffersCardRow(
-                    context: context,
-                    image:  HomeCubit.get(context).allOffersModel.data![index].coverImg.toString(),
-                    price: HomeCubit.get(context).allOffersModel.data![index].price.toString(),
-                    newPrice: HomeCubit.get(context).allOffersModel.data![index].newPrice.toString(),
-                    title:  HomeCubit.get(context).allOffersModel.data![index].name.toString(),
+                  itemBuilder: (context,index)=>InkWell(
+                      onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                      ProductDetailsScreen(details: HomeCubit.get(context).allOffersModel.data![index])
+                      ));
+                      },
+                    child: buildOffersCardRow(
+                      context: context,
+                      image:  HomeCubit.get(context).allOffersModel.data![index].coverImg.toString(),
+                      price: HomeCubit.get(context).allOffersModel.data![index].price.toString(),
+                      newPrice: HomeCubit.get(context).allOffersModel.data![index].offer!.price.toString(),
+                      title:  HomeCubit.get(context).allOffersModel.data![index].name.toString(),
+                    ),
                   ),
                   separatorBuilder: (context,index)=>SizedBox(width: 3.w,),
                   itemCount: HomeCubit.get(context).allOffersModel.data!.length)),
@@ -190,9 +195,6 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 2.h,),
 
 
-
-
-
               ConditionalBuilder(
                 condition: state is! HomeLoadingState,
                 builder: (context)=> SizedBox(
@@ -205,7 +207,8 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context,index)=>InkWell(
                       onTap: (){
                         HomeCubit.get(context).getProducts(
-                        brandId: HomeCubit.get(context).data[index]['shopId'].toString());
+                          id: '',
+                        brandId: HomeCubit.get(context).data[index]['id'].toString());
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -286,10 +289,11 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
-
               ConditionalBuilder(
-                condition: state is! AllProductsLoadingState,
-                builder: (context) => (HomeCubit.get(context).getProductsModel.data!.isNotEmpty)?  Column(
+                condition: state is! ProductsLoadingState,
+                builder: (context) =>
+                  (HomeCubit.get(context).getProductsModel.data!.isNotEmpty)?
+                Column(
                   children: [
                     Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 2.w),
@@ -310,7 +314,6 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -331,15 +334,15 @@ class HomeScreen extends StatelessWidget {
                                       details: HomeCubit.get(context).getProductsModel.data![index])));
                             },
                             child: buildNationalDayProductsItem(
-                                name: HomeCubit.get(context).getProductsModel.data![index].name.toString(),
-                                image: HomeCubit.get(context).getProductsModel.data![index].coverImg.toString(),
-                                context: context),
+                           name: HomeCubit.get(context).getProductsModel.data![index].name.toString(),
+                           image: HomeCubit.get(context).getProductsModel.data![index].coverImg.toString(),
+                           context: context),
                           ),
                           separatorBuilder:(context,index)=>SizedBox(width: 2.w,),
                           itemCount:HomeCubit.get(context).getProductsModel.data!.length),
                     ),
                   ],
-                ):Container(),
+                ) : Container(),
                 fallback: (context) =>Center(child: CircularProgressIndicator()),
 
               ),

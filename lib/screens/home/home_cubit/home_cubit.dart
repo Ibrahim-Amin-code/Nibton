@@ -1,15 +1,9 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nibton_app/models/all_offers.dart';
 import 'package:nibton_app/models/contact_model.dart';
-import 'package:nibton_app/models/get_cart_model.dart';
 import 'package:nibton_app/models/get_products_model.dart';
-import 'package:nibton_app/models/search_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:nibton_app/models/wish_list_model.dart';
 import 'package:nibton_app/network/cache/cache_helper.dart';
 import 'package:nibton_app/network/dio/dio_helper.dart';
@@ -31,6 +25,7 @@ class HomeCubit extends Cubit<HomeState> {
       url: GetShops,
 
     ).then((value) {
+      data.clear();
       data.addAll(value.data['data']);
       emit(HomeSuccessState());
     }).catchError((error) {
@@ -51,8 +46,8 @@ class HomeCubit extends Cubit<HomeState> {
         'lang':lang,
       }
     ).then((value) {
+      categories.clear();
       categories.addAll(value.data['data']);
-      // print('------------------------------------------------+' +lang.toString());
       emit(CategoriesSuccessState());
     }).catchError((error) {
       emit(CategoriesErrorState(error.toString()));
@@ -78,7 +73,7 @@ class HomeCubit extends Cubit<HomeState> {
         'lang': lang,
         }
     ).then((value){
-      print(value.data);
+      // print(value.data);
       getProductsModel = GetProductsModel.fromJson(value.data);
       emit(ProductsSuccessState());
     }).catchError((error) {
@@ -89,25 +84,25 @@ class HomeCubit extends Cubit<HomeState> {
 
 
 
-  void getAllProducts() async{
-    String lang = await CacheHelper.getData(key: 'lang')?? 'en';
-    emit(AllProductsLoadingState());
-    DioHelper.getData(
-        url: GetProducts,
-        query: {
-          // 'categoryId': '$id',
-          'lang': lang,
-        }
-
-    ).then((value){
-      print('-----------------------------------------------------------------------------------'+lang.toString());
-      getProductsModel = GetProductsModel.fromJson(value.data);
-      emit(AllProductsSuccessState());
-    }).catchError((error) {
-      emit(AllProductsErrorState(error.toString()));
-      print(error.toString());
-    });
-  }
+  // void getAllProducts() async{
+  //   String lang = await CacheHelper.getData(key: 'lang')?? 'en';
+  //   emit(AllProductsLoadingState());
+  //   DioHelper.getData(
+  //       url: GetProducts,
+  //       query: {
+  //         // 'categoryId': '$id',
+  //         'lang': lang,
+  //       }
+  //
+  //   ).then((value){
+  //     print('-----------------------------------------------------------------------------------'+lang.toString());
+  //     getProductsModel = GetProductsModel.fromJson(value.data);
+  //     emit(AllProductsSuccessState());
+  //   }).catchError((error) {
+  //     emit(AllProductsErrorState(error.toString()));
+  //     print(error.toString());
+  //   });
+  // }
 
 
 
@@ -128,13 +123,14 @@ class HomeCubit extends Cubit<HomeState> {
 
   List brandData=[];
 
-  void getBrand(){
+  void getBanners(){
     emit(GetBrandLoadingState());
     DioHelper.getData(
-        url: GetBrand,
+        url: GetBanners,
     ).then((value) {
+      brandData.clear();
       brandData.addAll(value.data['data']);
-      print(value.data);
+      // print(value.data);
       emit(GetBrandSuccessState());
     }).catchError((error) {
       emit(GetBrandErrorState(error.toString()));
@@ -188,6 +184,7 @@ List cart =[];
         url: GetCarts,
       token: 'Bearer $token',
     ).then((value) {
+      cart.clear();
       cart.addAll(value.data['data']);
       emit(GetCartSuccessState());
     }).catchError((error){
@@ -232,7 +229,6 @@ List cart =[];
       'message':message,
         }).then((value) {
       contact = value.data;
-          print('contact-------------------------------------------------'+value.data['msg']);
           emit(ContactUsSuccessState());
     }).catchError((error){
       emit(ContactUsErrorState(error.toString()));
@@ -254,7 +250,6 @@ List cart =[];
         query: {
           'productId':'$id',
         }).then((value) {
-      // print('addToWishList------------------------------------------'+value.data);
       msg = value.data['msg'];
       Fluttertoast.showToast(
           msg: msg.toString(),
@@ -285,7 +280,6 @@ List cart =[];
       token: 'Bearer $token',
     ).then((value){
       wishListModel = WishListModel.fromJson(value.data);
-      print('successssssssssssssssssssssssssssssssssssssssssssss');
       emit(GetWishListSuccessState());
     }).catchError((error) {
       emit(GetWishListErrorState(error.toString()));
@@ -295,7 +289,6 @@ List cart =[];
 
 
   AllOffersModel allOffersModel =AllOffersModel();
-
   void getAllOffers()
   {
     emit(AllOffersLoadingState());
@@ -303,7 +296,6 @@ List cart =[];
       url: AllOffers,
     ).then((value) {
       allOffersModel = AllOffersModel.fromJson(value.data);
-      print('-allOffersModel------------------------------------------------${value.data}');
       emit(AllOffersSuccessState());
     }).catchError((error)
     {
@@ -311,5 +303,13 @@ List cart =[];
       print(error.toString());
     });
   }
+
+
+
+
+
+
+
+
 
 }

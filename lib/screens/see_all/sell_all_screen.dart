@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 
 class SeeAllScreen extends StatefulWidget {
 
+
   @override
   _SeeAllScreenState createState() => _SeeAllScreenState();
 }
@@ -74,7 +75,7 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                                 image:HomeCubit.get(context).getProductsModel.data![index].coverImg.toString(),
                                 price:HomeCubit.get(context).getProductsModel.data![index].price.toString(),
                               ),
-                            ))
+                            )),
                 ),
               ],
             ),

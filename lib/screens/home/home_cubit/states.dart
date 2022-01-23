@@ -23,12 +23,12 @@ class ProductsErrorState extends HomeState{
   ProductsErrorState(this.error);
 }
 
-class AllProductsLoadingState extends HomeState{}
-class AllProductsSuccessState extends HomeState{}
-class AllProductsErrorState extends HomeState{
-  final String error;
-  AllProductsErrorState(this.error);
-}
+// class AllProductsLoadingState extends HomeState{}
+// class AllProductsSuccessState extends HomeState{}
+// class AllProductsErrorState extends HomeState{
+//   final String error;
+//   AllProductsErrorState(this.error);
+// }
 
 
 class ContactInfoLoadingState extends HomeState{}

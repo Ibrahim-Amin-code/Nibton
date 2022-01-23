@@ -16,35 +16,44 @@ class AllOffersModel {
     }
   }
 
-
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['msg'] = this.msg;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Data {
   int? id;
   int? categoryId;
-  dynamic shopId;
+  int? shopId;
+  int? vendorId;
   String? name;
   String? description;
-  var price;
+  int? price;
   int? quantity;
   String? modalNumber;
   String? department;
   String? coverImg;
-  dynamic slug;
+  String? slug;
   int? status;
   String? date;
+  List<String>? size;
+  List<String>? color;
   String? createdAt;
-  dynamic updatedAt;
-  var newPrice;
+  Null? updatedAt;
   List<ProductImage>? productImage;
-  List<Colors>? colors;
-  List<Sizes>? sizes;
+  Offer? offer;
 
   Data(
-      {
-        this.id,
+      {this.id,
         this.categoryId,
         this.shopId,
+        this.vendorId,
         this.name,
         this.description,
         this.price,
@@ -55,17 +64,18 @@ class Data {
         this.slug,
         this.status,
         this.date,
+        this.size,
+        this.color,
         this.createdAt,
         this.updatedAt,
-        this.newPrice,
         this.productImage,
-        this.colors,
-        this.sizes});
+        this.offer});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryId = json['categoryId'];
     shopId = json['shopId'];
+    vendorId = json['vendorId'];
     name = json['name'];
     description = json['description'];
     price = json['price'];
@@ -76,37 +86,56 @@ class Data {
     slug = json['slug'];
     status = json['status'];
     date = json['date'];
+    size = json['size'].cast<String>();
+    color = json['color'].cast<String>();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    newPrice = json['new_price'];
     if (json['product_image'] != null) {
       productImage = <ProductImage>[];
       json['product_image'].forEach((v) {
         productImage!.add(new ProductImage.fromJson(v));
       });
     }
-    if (json['colors'] != null) {
-      colors = <Colors>[];
-      json['colors'].forEach((v) {
-        colors!.add(new Colors.fromJson(v));
-      });
-    }
-    if (json['sizes'] != null) {
-      sizes = <Sizes>[];
-      json['sizes'].forEach((v) {
-        sizes!.add(new Sizes.fromJson(v));
-      });
-    }
+    offer = json['offer'] != null ? new Offer.fromJson(json['offer']) : null;
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['categoryId'] = this.categoryId;
+    data['shopId'] = this.shopId;
+    data['vendorId'] = this.vendorId;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['price'] = this.price;
+    data['quantity'] = this.quantity;
+    data['modal_number'] = this.modalNumber;
+    data['department'] = this.department;
+    data['cover_img'] = this.coverImg;
+    data['slug'] = this.slug;
+    data['status'] = this.status;
+    data['date'] = this.date;
+    data['size'] = this.size;
+    data['color'] = this.color;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.productImage != null) {
+      data['product_image'] =
+          this.productImage!.map((v) => v.toJson()).toList();
+    }
+    if (this.offer != null) {
+      data['offer'] = this.offer!.toJson();
+    }
+    return data;
+  }
 }
 
 class ProductImage {
   int? id;
   int? productId;
   String? image;
-  dynamic createdAt;
-  dynamic updatedAt;
+  Null? createdAt;
+  Null? updatedAt;
 
   ProductImage(
       {this.id, this.productId, this.image, this.createdAt, this.updatedAt});
@@ -119,42 +148,58 @@ class ProductImage {
     updatedAt = json['updated_at'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['productId'] = this.productId;
+    data['image'] = this.image;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
 }
 
-class Colors {
+class Offer {
   int? id;
   int? productId;
-  String? name;
-  dynamic createdAt;
-  dynamic updatedAt;
+  int? price;
+  String? formDate;
+  String? toDate;
+  String? image;
+  String? createdAt;
+  String? updatedAt;
 
-  Colors({this.id, this.productId, this.name, this.createdAt, this.updatedAt});
+  Offer(
+      {this.id,
+        this.productId,
+        this.price,
+        this.formDate,
+        this.toDate,
+        this.image,
+        this.createdAt,
+        this.updatedAt});
 
-  Colors.fromJson(Map<String, dynamic> json) {
+  Offer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     productId = json['productId'];
-    name = json['name'];
+    price = json['price'];
+    formDate = json['form_date'];
+    toDate = json['to_date'];
+    image = json['image'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
-}
-
-class Sizes {
-  int? id;
-  int? productId;
-  String? size;
-  dynamic createdAt;
-  dynamic updatedAt;
-
-  Sizes({this.id, this.productId, this.size, this.createdAt, this.updatedAt});
-
-  Sizes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    productId = json['productId'];
-    size = json['size'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['productId'] = this.productId;
+    data['price'] = this.price;
+    data['form_date'] = this.formDate;
+    data['to_date'] = this.toDate;
+    data['image'] = this.image;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
   }
-
 }
