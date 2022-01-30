@@ -19,7 +19,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
   ];
   late PageController pageController;
 
-  bool isTapped = true;
+  // bool isTapped = true;
   int currentIndex = 0;
 
   @override

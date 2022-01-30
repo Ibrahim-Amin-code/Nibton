@@ -145,7 +145,7 @@ Widget buildWishListProductsItem({
                 Container(
                   width: 28.w,
                   height: 3.5.h,
-                  padding: EdgeInsets.only(left: 1.5.w),
+                  padding: EdgeInsets.only(left: 1.5.w,right: 1.5.w),
                   color: HexColor('#2D2D2D'),
                   child: Row(
                     children: [

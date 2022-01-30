@@ -17,8 +17,6 @@ class LoginCubit extends Cubit<LoginStates> {
 
   LoginModel loginModel = LoginModel();
 
-
-
   void userLogin({
     required String email,
     required String password,
@@ -32,9 +30,11 @@ class LoginCubit extends Cubit<LoginStates> {
       },
       url: Login,
     ).then((value) async {
+
       loginModel = LoginModel.fromJson(value.data);
       CacheHelper.saveData(value: loginModel.data!.token ,key: 'token');
-
+      CacheHelper.saveData(value: loginModel.data!.name ,key: 'username');
+      CacheHelper.saveData(value: loginModel.data!.id.toString() ,key: 'userID');
       print(
           '========================================================= ${loginModel.msg}=');
       print(

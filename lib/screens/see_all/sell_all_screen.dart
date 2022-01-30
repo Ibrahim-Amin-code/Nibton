@@ -31,7 +31,7 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
         listener: (context,state){},
         builder: (context,state){
           return ConditionalBuilder(
-            condition: state is ProductsSuccessState,
+            condition: state is! ProductsLoadingState,
             builder: (context)=> ListView(
               children: [
                 Container(

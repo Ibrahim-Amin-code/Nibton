@@ -6,6 +6,7 @@ import 'package:nibton_app/screens/Authnitication/auth.dart';
 import 'package:nibton_app/screens/all_brands/all_brands_screen.dart';
 import 'package:nibton_app/screens/categories/categories_component/component.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
+import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/layout/layout_screen.dart';
 import 'package:nibton_app/screens/menu_screens/about_us/about_us_screen.dart';
 import 'package:nibton_app/screens/menu_screens/contact_us/contact_us_screen.dart';
@@ -69,7 +70,10 @@ class MoreScreen extends StatelessWidget {
           myDivider(height: 1),
 
           InkWell(
-              onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>WishListScreen())),
+              onTap: (){
+                HomeCubit.get(context).getWishList();
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>WishListScreen()));
+              },
               child: buildMenuCardItem(title: LocaleKeys.Wish_List.tr(),imageIcon: 'assets/images/wishlist.png')),
           myDivider(height: 1),
 

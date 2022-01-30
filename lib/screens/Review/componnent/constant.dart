@@ -4,7 +4,12 @@ import 'package:nibton_app/screens/components/constants.dart';
 import 'package:sizer/sizer.dart';
 
 
-reviewContent() {
+reviewContent({
+  required String name,
+  required String date,
+  required String rate,
+  required String comment,
+}){
   return Container(
     padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
     decoration: BoxDecoration(
@@ -25,22 +30,25 @@ reviewContent() {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RatingBar.builder(
-              initialRating: 3,
+              initialRating:(rate !="gooood")? double.parse(rate) : 0,
               minRating: 1,
               itemSize: 15,
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
+              ignoreGestures: true,
               unratedColor: HexColor("#C9C9C9"),
               itemBuilder: (context, _) => Icon(
                 Icons.star,
                 color: HexColor("#4CB8BA"),
                 size: 10,
               ),
-              onRatingUpdate: (rating) {},
+              onRatingUpdate: (rating) {
+
+              },
             ),
             Text(
-              "June 10, 2020",
+              date,
               style: headingStyle.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -50,7 +58,7 @@ reviewContent() {
         ),
         spaceH(15),
         Text(
-          "Ashraf Almashhari",
+          name,
           textAlign: TextAlign.end,
           style: headingStyle.copyWith(
               fontSize: 11.sp,
@@ -59,7 +67,7 @@ reviewContent() {
         ),
         spaceH(10),
         Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting",
+          comment,
           textAlign: TextAlign.start,
           style: headingStyle.copyWith(
               fontSize: 10.sp,

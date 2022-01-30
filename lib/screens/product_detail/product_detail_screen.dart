@@ -108,7 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           ),
           SizedBox(height: 1.h,),
-          buildRatingBarRow(context),
+          buildRatingBarRow(context: context,id: widget.details.id.toString()),
           SizedBox(height: 1.h,),
           Row(
             children: [

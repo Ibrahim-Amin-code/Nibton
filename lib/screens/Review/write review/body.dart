@@ -1,18 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
+import 'package:nibton_app/network/cache/cache_helper.dart';
+import 'package:nibton_app/screens/Authnitication/sign_in/login_cubit/cubit.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'package:nibton_app/screens/components/default_button.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
+import 'package:nibton_app/screens/home/home_cubit/states.dart';
+import 'package:nibton_app/screens/menu_screens/profile/get_profile_cubit/cubit.dart';
 
 // ignore: use_key_in_widget_constructors
 class WriteRviewBody extends StatefulWidget {
+  final String id;
+
+  const WriteRviewBody({Key? key,required this.id}) : super(key: key);
   @override
   _WriteRviewBodyState createState() => _WriteRviewBodyState();
 }
 
 class _WriteRviewBodyState extends State<WriteRviewBody> {
   TextEditingController message = TextEditingController();
+  double rate = 0.0;
+
+  String userName = '';
+
+  getUserName()
+  async{
+    final String name = await CacheHelper.getData(key: 'username');
+      setState(() {
+        userName = name;
+      });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +71,7 @@ class _WriteRviewBodyState extends State<WriteRviewBody> {
         spaceH(30),
         Center(
           child: RatingBar.builder(
-            initialRating: 3,
+            initialRating: rate,
             minRating: 1,
             itemSize: 30,
             direction: Axis.horizontal,
@@ -56,7 +83,11 @@ class _WriteRviewBodyState extends State<WriteRviewBody> {
               color: HexColor("##FFBE03"),
               size: 10,
             ),
-            onRatingUpdate: (rating) {},
+            onRatingUpdate: (rating) {
+              setState(() {
+                rate = rating;
+              });
+            },
           ),
         ),
         spaceH(15),
@@ -83,7 +114,8 @@ class _WriteRviewBodyState extends State<WriteRviewBody> {
             spaceW(15),
             Center(
               child: Text(
-                "ASHRAF ALMASHHARI",
+                //      CacheHelper.saveData(value: loginModel.data!.name ,key: 'username');
+                userName,
                 style: headingStyle.copyWith(
                     color: HexColor("#4CB8BA"),
                     fontSize: 18,
@@ -110,7 +142,19 @@ class _WriteRviewBodyState extends State<WriteRviewBody> {
         Center(
           child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: DefaultButton(press: () {}, text: LocaleKeys.Done.tr())),
+              child: DefaultButton(
+                  press: () {
+                    DateTime now = DateTime.now();
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd – kk:mm').format(now);
+                    HomeCubit.get(context).addReview(
+                      // id: widget.id,
+                        productId:  widget.id,
+                        comment: message.text.toString(),
+                        rate: rate,
+                        date: formattedDate);
+                  },
+                  text: LocaleKeys.Done.tr())),
         ),
         spaceH(15),
       ],

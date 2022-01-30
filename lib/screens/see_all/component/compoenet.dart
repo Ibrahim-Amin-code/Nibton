@@ -190,7 +190,10 @@ Widget buildSeeAllProductsItem({
                  onTap: (){
                    HomeCubit.get(context).addToWishList(id: id);
                  },
-                child: Icon(Icons.favorite_outline,color: Colors.yellow,)),
+                child:
+                        // ignore: unrelated_type_equality_checks
+                 (HomeCubit.get(context).isFavourite[id] == false)?
+                Icon(Icons.favorite_outline,color: Colors.yellow,): Icon(Icons.favorite,color: Colors.yellow,)),
             Spacer(),
             InkWell(
               onTap: (){

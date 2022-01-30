@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,10 @@ class WishListScreen extends StatelessWidget {
           return ListView(
             padding: EdgeInsets.symmetric(horizontal: 3.w,vertical: 1.h),
             children: [
-              GridView.count(
+              // (HomeCubit.get(context).wishListModel.data.isNotEmpty)?
+              ConditionalBuilder(
+                condition: state is! GetWishListLoadingState,
+                builder: (context)=>  GridView.count(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
@@ -75,32 +79,31 @@ class WishListScreen extends StatelessWidget {
                   childAspectRatio: 1 / 1.55,
                   children:
                   List.generate(
-                      HomeCubit.get(context).wishListModel.data!.length,
+                    //var len = foo?.length ??
+                      HomeCubit.get(context).wish.length,
                           (index) =>
                           InkWell(
                             onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailsScreen(
                               details: HomeCubit.get(context).wishListModel.data![index],
                             ))),
-
                             child: SizedBox(
                               height: 41.h,
                               child: buildWishListProductsItem(
-                                id: HomeCubit.get(context).wishListModel.data![index].id.toString(),
+                                id: HomeCubit.get(context).wish[index]['id'].toString(),
                                 context: context,
-                                name: HomeCubit.get(context).wishListModel.data![index].name.toString(),
-                                image:HomeCubit.get(context).wishListModel.data![index].coverImg.toString(),
-                                price:HomeCubit.get(context).wishListModel.data![index].price.toString(),
+                                name: HomeCubit.get(context).wish[index]['name'].toString(),
+                                image:HomeCubit.get(context).wish[index]['cover_img'].toString(),
+                                price:HomeCubit.get(context).wish[index]['price'].toString(),
                               ),
                             ),
                           )),
-
+                ),
+                fallback: (context)=>Center(child: CircularProgressIndicator()),
               ),
               SizedBox(height: 2.h,),
             ],
-
           );
         },
-        // child: ,
       ),
     );
   }

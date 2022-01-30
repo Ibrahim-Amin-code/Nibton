@@ -45,7 +45,7 @@ class ContactUsScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is ContactUsSuccessState) {
             Fluttertoast.showToast(
-                msg: HomeCubit.get(context).contact['msg'].toString(),
+                msg: HomeCubit.get(context).contact.toString(),
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,

@@ -17,3 +17,6 @@ const ContactUs = 'sendhelp';
 const wishlists = 'addto/wishlists';
 const getWishlists = 'product/wishlists';
 const AllOffers = 'alloffers';
+const AddReview = 'add-review';
+const AllReviews = 'all-reviews';
+const AddAddress = 'add-adress';
