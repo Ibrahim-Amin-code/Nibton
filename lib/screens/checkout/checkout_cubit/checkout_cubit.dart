@@ -1,33 +1,87 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nibton_app/models/get_address_model.dart';
 import 'package:nibton_app/network/cache/cache_helper.dart';
 import 'package:nibton_app/network/dio/dio_helper.dart';
 import 'package:nibton_app/network/end_points.dart';
 import 'package:nibton_app/screens/checkout/checkout_cubit/states.dart';
+import 'package:nibton_app/screens/components/constants.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {
   CheckoutCubit() : super(CheckoutInitialState());
 
   static CheckoutCubit get(context) => BlocProvider.of(context);
 
-  List addressesData=[];
 
-  void getAddresses()async {
+  GetAddressModel getAddressModel =GetAddressModel();
+
+  // List addressesData=[];
+
+  void getAddresses(
+  // required String id,
+)async {
     emit(CheckoutLoadingState());
     String token = await CacheHelper.getData(key: 'token');
+    String userID = await CacheHelper.getData(key: 'userID');
     DioHelper.getData(
       url: GetAddresses,
       query: {
-        'buyerId':'2',
+        'buyerId':userID,
       },
         token: 'Bearer $token',
     ).then((value) {
-      addressesData.addAll(value.data['data']);
+      getAddressModel = GetAddressModel.fromJson(value.data);
       print(value.data);
+      print('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'+userID.toString());
       emit(CheckoutSuccessState());
     }).catchError((error){
       emit(CheckoutErrorState(error));
       print(error.toString());
     });
 
+  }
+
+  void addAddress({
+  required String addressName,
+  required String addressId,
+  required String fullAddress,
+  required String fullName,
+  required String email,
+  required String phone,
+  required String city,
+  required String state,
+})async
+  {
+    emit(AddAddressLoadingState());
+    String token = await CacheHelper.getData(key: 'token');
+    DioHelper.postData(
+        url: AddAddress,
+        token: 'Bearer $token',
+        data: {
+          'addressId':addressId,
+          'address_name':addressName,
+          'full_address':fullAddress,
+          'full_name':fullName,
+          'email':email,
+          'phone':phone,
+          'city':city,
+          'state':state,
+        },
+    ).then((value) {
+        print(value.data);
+        Fluttertoast.showToast(
+            msg: value.data['msg'].toString(),
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: HexColor('#727C8E'),
+            fontSize: 16.0);
+      emit(AddAddressSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(AddAddressErrorState(error.toString()));
+    });
   }
 }

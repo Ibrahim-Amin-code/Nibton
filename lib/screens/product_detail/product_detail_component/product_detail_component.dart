@@ -49,7 +49,10 @@ Widget buildAddToCartAndWishListContainer({
       ),
     );
 
-Widget buildAddToWishListRow({context,required String id,}) => Row(
+Widget buildAddToWishListRow({
+  context,
+  required String id,}) =>
+    Row(
       children: [
         CircleAvatar(
           backgroundColor: HexColor('#5A5A5A'),
@@ -184,7 +187,10 @@ Widget buildSeeAllButton() => Container(
       ),
     );
 
-Widget buildRatingBarRow(context) => Row(
+
+
+
+Widget buildRatingBarRow({context,required String id,}) => Row(
       children: [
         RatingBar.builder(
           initialRating: 3,
@@ -206,7 +212,10 @@ Widget buildRatingBarRow(context) => Row(
           width: 3.w,
         ),
         InkWell(
-          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>ReviewScreen()),),
+          onTap: (){
+            HomeCubit.get(context).getReviews(id: id);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ReviewScreen(id: id,)),);
+          },
           child: Text(
             '1 ${LocaleKeys.Review.tr()} ',
             style: TextStyle(
@@ -221,7 +230,7 @@ Widget buildRatingBarRow(context) => Row(
           width: 1.w,
         ),
         InkWell(
-          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>WriteReviewScreen()),),
+          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>WriteReviewScreen(iD: id,)),),
           child: Text(
             '| ${LocaleKeys.Write_Review.tr()}',
             style: TextStyle(

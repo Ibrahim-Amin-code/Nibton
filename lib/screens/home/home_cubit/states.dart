@@ -98,3 +98,20 @@ class AllOffersErrorState extends HomeState{
   final String error;
   AllOffersErrorState(this.error);
 }
+
+class AddReviewLoadingState extends HomeState{}
+class AddReviewSuccessState extends HomeState{}
+class AddReviewErrorState extends HomeState{
+  final String error;
+  AddReviewErrorState(this.error);
+}
+
+
+
+
+class AllReviewLoadingState extends HomeState{}
+class AllReviewSuccessState extends HomeState{}
+class AllReviewErrorState extends HomeState{
+  final String error;
+  AllReviewErrorState(this.error);
+}

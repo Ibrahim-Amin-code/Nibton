@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
@@ -25,20 +26,24 @@ class _UserAddressState extends State<UserAddress> {
         return SingleChildScrollView(
           child: Column(
             children: [
-              ListView.separated(
-                  primary: false,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) =>
-                      addressCard(
-                          addressName: CheckoutCubit.get(context).addressesData[index]['address_name'],
-                          firstName:CheckoutCubit.get(context).addressesData[index]['first_name'],
-                          lastName:CheckoutCubit.get(context).addressesData[index]['last_name'],
-                          stateOrTerritory:CheckoutCubit.get(context).addressesData[index]['state_or_territory'],
-                          suburbOrTown:CheckoutCubit.get(context).addressesData[index]['suburb_or_town'],
-                      ),
-                  separatorBuilder: (context, index) => spaceH(10),
-                  itemCount: CheckoutCubit.get(context).addressesData.length),
+              ConditionalBuilder(
+                condition: state is! CheckoutLoadingState,
+                builder: (context)=> ListView.separated(
+                    primary: false,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        addressCard(
+                            addressTitle : CheckoutCubit.get(context).getAddressModel.data![index].addressName.toString(),
+                            city:  CheckoutCubit.get(context).getAddressModel.data![index].city.toString(),
+                            fullName:  CheckoutCubit.get(context).getAddressModel.data![index].fullName.toString(),
+                            state:   CheckoutCubit.get(context).getAddressModel.data![index].state.toString()
+                        ),
+                    separatorBuilder: (context, index) => spaceH(10),
+                    itemCount: CheckoutCubit.get(context).getAddressModel.data!.length),
+                fallback: (context)=>Center(child: CircularProgressIndicator()),
+                // child: ,
+              ),
               spaceH(15),
               placeOrderButton(
                   context: context, title: LocaleKeys.PROCEED.tr(), press: () {})
@@ -46,15 +51,13 @@ class _UserAddressState extends State<UserAddress> {
           ),
         );
       },
-      // child: ,
     );
   }
   addressCard({
-    required String suburbOrTown,
-    required String stateOrTerritory,
-    required String addressName,
-    required String firstName,
-    required String lastName,
+    required String fullName,
+    required String addressTitle,
+    required String state,
+    required String city,
 }) {
     return Container(
       padding:  EdgeInsets.symmetric(vertical: 1.h, horizontal: 3.w),
@@ -76,7 +79,7 @@ class _UserAddressState extends State<UserAddress> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                addressName,
+                addressTitle,
                 style: headingStyle.copyWith(
                     color: HexColor("#4CB8BA"),
                     fontSize: 13.sp,
@@ -89,7 +92,7 @@ class _UserAddressState extends State<UserAddress> {
                   onChanged: (value) {})
             ],
           ),
-          Text(firstName + lastName,
+          Text(fullName,
             style: headingStyle.copyWith(
                 color: HexColor("#515C6F"),
                 fontSize: 13.sp,
@@ -97,7 +100,7 @@ class _UserAddressState extends State<UserAddress> {
           ),
           SizedBox(height: 0.5.h,),
           Text(
-            suburbOrTown,
+            city,
             style: headingStyle.copyWith(
                 color: HexColor("#515C6F").withOpacity(0.5),
                 fontSize: 12.sp,
@@ -109,7 +112,7 @@ class _UserAddressState extends State<UserAddress> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                stateOrTerritory,
+                state,
                 style: headingStyle.copyWith(
                     color: HexColor("#4CB8BA"),
                     fontSize: 12.sp,

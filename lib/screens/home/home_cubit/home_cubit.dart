@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nibton_app/models/all_offers.dart';
 import 'package:nibton_app/models/contact_model.dart';
+import 'package:http/http.dart' as http;
 import 'package:nibton_app/models/get_products_model.dart';
+import 'package:nibton_app/models/reviews_model.dart';
 import 'package:nibton_app/models/wish_list_model.dart';
 import 'package:nibton_app/network/cache/cache_helper.dart';
 import 'package:nibton_app/network/dio/dio_helper.dart';
@@ -179,13 +184,13 @@ List cart =[];
   void getCard() async
   {
     emit(GetCartLoadingState());
-    String token = await CacheHelper.getData(key: 'token');
+    String token = await CacheHelper.getData(key: 'token')??'';
     DioHelper.getData(
         url: GetCarts,
       token: 'Bearer $token',
     ).then((value) {
       cart.clear();
-      cart.addAll(value.data['data']);
+      cart.addAll(value.data!['data']);
       emit(GetCartSuccessState());
     }).catchError((error){
       emit(GetCartErrorState(error.toString()));
@@ -207,7 +212,7 @@ List cart =[];
     // }
   }
 
-  var contact;
+  dynamic contact;
 
   void contactUs({
   required String name,
@@ -228,7 +233,7 @@ List cart =[];
       'email':email,
       'message':message,
         }).then((value) {
-      contact = value.data;
+      contact = value.data['msg'];
           emit(ContactUsSuccessState());
     }).catchError((error){
       emit(ContactUsErrorState(error.toString()));
@@ -238,6 +243,7 @@ List cart =[];
   }
 
   String msg = '';
+  Map<String,bool> isFavourite= {};
 
   void addToWishList({
     required String id,
@@ -259,6 +265,7 @@ List cart =[];
           backgroundColor: HexColor("#B59945"),
           textColor: HexColor('#727C8E'),
           fontSize: 16.0);
+      isFavourite["$id"] = true;
       print('-----------------------------------------------${msg.toString()}');
       emit(WishListSuccessState());
     }).catchError((error){
@@ -267,25 +274,36 @@ List cart =[];
     });
   }
 
+  WishListModel wishListModel =WishListModel();
 
-  WishListModel wishListModel = WishListModel();
-
+  List wish = [];
 
   void getWishList()async
   {
     emit(GetWishListLoadingState());
-    String token = await CacheHelper.getData(key: 'token');
-    DioHelper.getData(
-        url: getWishlists,
-      token: 'Bearer $token',
-    ).then((value){
-      wishListModel = WishListModel.fromJson(value.data);
+    String token = await CacheHelper.getData(key: 'token')??'';
+    String lang = await CacheHelper.getData(key: 'lang')?? 'en';
+
+    try{
+      var response = await http.get(Uri.parse('https://findfamily.net/eshop/api/buyers/product/wishlists?lang=$lang'),
+          headers: {
+        'Authorization': 'Bearer $token',
+      },);
+      wish.clear();
+      wishListModel = WishListModel.fromJson(json.decode(response.body));
+      var data = json.decode(response.body);
+      wish.addAll(data['data']);
+
+      print('wishListModel----------------------------------------------------------------------------------'+response.body);
       emit(GetWishListSuccessState());
-    }).catchError((error) {
+    }
+    catch(error){
       emit(GetWishListErrorState(error.toString()));
       print(error.toString());
-    });
+    }
   }
+
+
 
 
   AllOffersModel allOffersModel =AllOffersModel();
@@ -300,14 +318,72 @@ List cart =[];
     }).catchError((error)
     {
       emit(AllOffersErrorState(error.toString()));
+      print('errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr'+error.toString());
+    });
+  }
+
+  String addReviewMsg = '';
+  void addReview({
+  required String productId,
+  required String comment,
+  required double rate,
+  required String date,
+})async{
+    emit(AddReviewLoadingState());
+    String token = await CacheHelper.getData(key: 'token');
+    String lang = await CacheHelper.getData(key: 'lang')??'en';
+    DioHelper.postData(
+        url: AddReview,
+        data: {
+          'productId':productId,
+          'comment':comment,
+          'rate':rate,
+          'date':date,
+          'lang':lang,
+        },
+        token: 'Bearer $token',
+    ).then((value){
+      addReviewMsg = value.data['msg'];
+      Fluttertoast.showToast(
+          msg: addReviewMsg.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: HexColor('#727C8E'),
+          fontSize: 16.0);
+      print(value.data);
+      emit(AddReviewSuccessState());
+    }).catchError((error){
       print(error.toString());
+      emit(AddReviewErrorState(error.toString()));
     });
   }
 
 
+  ClassReviewsModel classReviewsModel =ClassReviewsModel();
 
-
-
+void getReviews({
+  required String id,
+})async{
+    emit(AllReviewLoadingState());
+    String token = await CacheHelper.getData(key: 'token');
+    DioHelper.getData(
+      url : AllReviews,
+      query: {
+        'productId':id
+      },
+      token: 'Bearer $token',
+    ).then((value) {
+      classReviewsModel = ClassReviewsModel.fromJson(value.data);
+      print(value.data);
+      print('------------------------------------------'+id);
+      emit(AllReviewSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(AllReviewErrorState(error.toString()));
+    });
+}
 
 
 

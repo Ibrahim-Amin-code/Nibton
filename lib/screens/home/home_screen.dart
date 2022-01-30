@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                     showSearch(context: context, delegate: ProductsSearch());
                   },
                   child: buildSearchCardInHomeScreen()),
-              SizedBox(height: 3.h,),
+              SizedBox(height: 5.h,),
               ConditionalBuilder(
                 condition: state is! CategoriesLoadingState,
                 builder: (context)=> SizedBox(
@@ -96,6 +96,7 @@ class HomeScreen extends StatelessWidget {
                 fallback: (context)=>  Center(child: CircularProgressIndicator()),
                 // child:
               ),
+              SizedBox(height: 3.h,),
               CarouselSlider.builder(
                 itemCount: 1,
                 itemBuilder: (context,index,pageViewIndex){
@@ -115,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                   aspectRatio: 3,
                 ),
               ),
-              SizedBox(height: 2.h,),
+              SizedBox(height: 4.h,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Row(
@@ -165,8 +166,7 @@ class HomeScreen extends StatelessWidget {
                   separatorBuilder: (context,index)=>SizedBox(width: 3.w,),
                   itemCount: HomeCubit.get(context).allOffersModel.data!.length)),
 
-
-              SizedBox(height: 2.h,),
+              SizedBox(height: 5.h,),
 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -239,7 +239,7 @@ class HomeScreen extends StatelessWidget {
 
 
 
-              SizedBox(height: 1.5.h,),
+              SizedBox(height: 3.h,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Row(
@@ -269,6 +269,8 @@ class HomeScreen extends StatelessWidget {
                 height: 157,
                 child: Image.asset('assets/images/Image 33.png',fit: BoxFit.cover,),
               ),
+              // SizedBox(height: 2.h,),
+
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
                 decoration: BoxDecoration(
@@ -287,7 +289,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 2.h,
+                height: 3.h,
               ),
               ConditionalBuilder(
                 condition: state is! ProductsLoadingState,
@@ -375,7 +377,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ):
               Container(),
-              SizedBox(height: 2.h,),
+
+              SizedBox(height: 4.h,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 2.w),
                 child: Row(
@@ -398,7 +401,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 2.h,),
+              SizedBox(height: 3.h,),
               Container(
                 height: MediaQuery.of(context).size.height*0.42,
                 child: ListView.separated(

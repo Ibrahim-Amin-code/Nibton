@@ -8,6 +8,9 @@ import 'package:sizer/sizer.dart';
 
 // ignore: use_key_in_widget_constructors
 class WriteReviewScreen extends StatefulWidget {
+  final String iD;
+
+  const WriteReviewScreen({Key? key, required this.iD}) : super(key: key);
   @override
   _WriteReviewScreenState createState() => _WriteReviewScreenState();
 }
@@ -37,7 +40,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
               ],
             ),)),
-      body: WriteRviewBody(),
+      body: WriteRviewBody(id: widget.iD,),
     );
   }
 }

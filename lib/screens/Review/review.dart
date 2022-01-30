@@ -9,6 +9,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 // ignore: use_key_in_widget_constructors
 class ReviewScreen extends StatefulWidget {
+  final String id;
+
+  const ReviewScreen({Key? key,required this.id}) : super(key: key);
   @override
   _ReviewScreenState createState() => _ReviewScreenState();
 }
@@ -38,7 +41,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
               ],
             ),)),
-      body: ReviewBody(),
+      body: ReviewBody(id: widget.id.toString(),),
     );
   }
 }
