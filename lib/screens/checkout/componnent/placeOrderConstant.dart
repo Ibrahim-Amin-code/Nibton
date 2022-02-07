@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:nibton_app/screens/editAddress/editAddress.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-addressCard(context) {
+selectAddressCardStatic(context) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     decoration: BoxDecoration(
@@ -38,7 +38,7 @@ addressCard(context) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EditAddressScreen()));
+                        builder: (context) => EditAddressScreen(id: '',)));
               },
               child: Container(
                   padding:
@@ -92,7 +92,7 @@ addressCard(context) {
   );
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
 orderItemCard() {
   return Container(

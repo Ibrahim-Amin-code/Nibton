@@ -93,14 +93,13 @@ class AllBrands extends StatelessWidget {
         ),
         Container(
           width: double.infinity,
-          // height: 40,
+          height: 25,
           margin: EdgeInsets.only(top: 20.h),
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [HexColor('#40A2A6'), HexColor('#4CB8BA')])),
 
-          child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 18.w),
+          child: Center(
             child: Text(
               title,
               style: TextStyle(

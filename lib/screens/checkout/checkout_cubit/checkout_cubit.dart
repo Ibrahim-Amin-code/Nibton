@@ -84,4 +84,25 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       emit(AddAddressErrorState(error.toString()));
     });
   }
+
+
+  void deleteAddress({
+  required String addressId
+}){
+  emit(DeleteAddressLoadingState());
+    DioHelper.postData(
+        url: DeleteAddress,
+        data: {
+          'addressId':addressId
+        }).then((value) {
+      print('deleteAddress---------------------------------------- ${value.data}');
+      emit(DeleteAddressSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(DeleteAddressErrorState(error.toString()));
+
+    });
+
+  }
+
 }

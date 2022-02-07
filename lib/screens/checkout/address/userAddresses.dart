@@ -34,6 +34,7 @@ class _UserAddressState extends State<UserAddress> {
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) =>
                         addressCard(
+                          addressId: CheckoutCubit.get(context).getAddressModel.data![index].id.toString(),
                             addressTitle : CheckoutCubit.get(context).getAddressModel.data![index].addressName.toString(),
                             city:  CheckoutCubit.get(context).getAddressModel.data![index].city.toString(),
                             fullName:  CheckoutCubit.get(context).getAddressModel.data![index].fullName.toString(),
@@ -58,6 +59,7 @@ class _UserAddressState extends State<UserAddress> {
     required String addressTitle,
     required String state,
     required String city,
+    required String addressId,
 }) {
     return Container(
       padding:  EdgeInsets.symmetric(vertical: 1.h, horizontal: 3.w),
@@ -125,7 +127,9 @@ class _UserAddressState extends State<UserAddress> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditAddressScreen()));
+                              builder: (context) => EditAddressScreen(id: addressId,)));
+                      CheckoutCubit.get(context).getAddresses();
+
                     },
                     child: Container(
                       width: 15.w,
@@ -155,7 +159,10 @@ class _UserAddressState extends State<UserAddress> {
                   ),
                   spaceW(10),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      CheckoutCubit.get(context).deleteAddress(addressId: addressId);
+                      CheckoutCubit.get(context).getAddresses();
+                    },
                     child: Container(
                       width: 18.w,
                       height: 5.h,

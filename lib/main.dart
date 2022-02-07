@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nibton_app/screens/Authnitication/forgetPassword/cubit/cubit.dart';
 import 'package:nibton_app/screens/Authnitication/sign_in/login_cubit/cubit.dart';
-import 'package:nibton_app/screens/Review/review.dart';
-import 'package:nibton_app/screens/Review/write%20review/write_review.dart';
 import 'package:nibton_app/screens/checkout/checkout_cubit/checkout_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/layout/cubit/cubit.dart';
-import 'package:nibton_app/screens/menu_screens/profile/get_profile_cubit/cubit.dart';
 import 'package:nibton_app/screens/menu_screens/profile/update_profile_cubit/update_profle_cubit.dart';
 import 'package:nibton_app/screens/splash/splashScreen.dart';
 import 'package:sizer/sizer.dart';
@@ -31,7 +28,6 @@ runApp(  EasyLocalization(
     // fallbackLocale: Locale('en', ''),
     assetLoader: CodegenLoader(),
     child: MyApp(),));
-
 }
 
 class MyApp extends StatelessWidget {

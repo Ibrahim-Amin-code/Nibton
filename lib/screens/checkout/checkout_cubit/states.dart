@@ -16,3 +16,11 @@ class AddAddressErrorState extends CheckoutState{
   final String error;
   AddAddressErrorState(this.error);
 }
+
+
+class DeleteAddressLoadingState extends CheckoutState{}
+class DeleteAddressSuccessState extends CheckoutState{}
+class DeleteAddressErrorState extends CheckoutState{
+  final String error;
+  DeleteAddressErrorState(this.error);
+}

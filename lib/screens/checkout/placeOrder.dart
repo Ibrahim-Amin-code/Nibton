@@ -23,7 +23,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            addressCard(context),
+            selectAddressCardStatic(context),
             spaceH(15),
             Text(
               LocaleKeys.Your_Orders.tr() + '(10)',
