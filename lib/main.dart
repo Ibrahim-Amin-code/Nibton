@@ -21,17 +21,17 @@ Future<void> main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.inti();
 
-
-runApp(  EasyLocalization(
+  runApp(EasyLocalization(
     supportedLocales: [Locale('en', ''), Locale('ar', '')],
     path: 'assets/translations', // <-- change the path of the translation files
     // fallbackLocale: Locale('en', ''),
     assetLoader: CodegenLoader(),
-    child: MyApp(),));
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-
+// finish all address
   @override
   Widget build(BuildContext context) {
     return Sizer(
@@ -40,8 +40,10 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider<AppCubit>(create: (context) => AppCubit()),
               BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
-              BlocProvider<ForgetPasswordCubit>(create: (context) => ForgetPasswordCubit()),
-              BlocProvider<UpdateProfileCubit>(create: (context) => UpdateProfileCubit()),
+              BlocProvider<ForgetPasswordCubit>(
+                  create: (context) => ForgetPasswordCubit()),
+              BlocProvider<UpdateProfileCubit>(
+                  create: (context) => UpdateProfileCubit()),
               BlocProvider<HomeCubit>(
                   create: (context) => HomeCubit()
                     ..getShops()
@@ -49,11 +51,12 @@ class MyApp extends StatelessWidget {
                     ..contactInfo()
                     ..getBanners()
                     ..getCard()
-                    ..getProducts(id: '',brandId: '')
+                    ..getProducts(id: '', brandId: '')
                     ..getWishList()
                     ..getAllOffers()
                     ..getReviews(id: '')),
-              BlocProvider<CheckoutCubit>(create: (context) => CheckoutCubit()..getAddresses()),
+              BlocProvider<CheckoutCubit>(
+                  create: (context) => CheckoutCubit()..getAddresses()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
