@@ -18,11 +18,9 @@ class CacheHelper
    {
      SharedPreferences  sharedPreferences = await SharedPreferences.getInstance();
      print('-----------------------------------sharedPreferences.clear()');
-     return sharedPreferences.clear();
 
+         return sharedPreferences.clear();
    }
-
-
 
 
    static Future<bool> saveData({

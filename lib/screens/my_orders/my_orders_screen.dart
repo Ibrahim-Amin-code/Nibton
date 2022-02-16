@@ -1,7 +1,11 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
+import 'package:nibton_app/screens/my_orders/cubit/cubit.dart';
+import 'package:nibton_app/screens/my_orders/cubit/states.dart';
 import 'package:sizer/sizer.dart';
 
 import 'my_order_component/component.dart';
@@ -11,6 +15,7 @@ class MyOrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: HexColor('#F5F6F8'),
 
@@ -34,12 +39,30 @@ class MyOrdersScreen extends StatelessWidget {
                 ],
               ),
             ),)),
-      body: ListView.separated(
-        itemBuilder: (context,index)=>buildMyOrderCardItem(context),
-        separatorBuilder: (context,index)=> SizedBox(height: 3.h,),
-        itemCount: 5,
-        padding: EdgeInsets.symmetric(horizontal: 3.w,),
-        physics: BouncingScrollPhysics(),
+      body: BlocConsumer<OrderCubit,OrderState>(
+        listener: (context,state){},
+        builder: (context,state){
+          return ConditionalBuilder(
+            condition: state is! OrderLoadingState,
+            builder: (context) => ListView.separated(
+              itemBuilder: (context,index)=>buildMyOrderCardItem(
+                details: OrderCubit.get(context).getOrderModel.data![index],
+                context: context,
+                itemsNum: OrderCubit.get(context).getOrderModel.data![index].products!.length.toString(),
+                date:  OrderCubit.get(context).getOrderModel.data![index].updatedAt.toString().substring(0,10),
+                orderNum: OrderCubit.get(context).getOrderModel.data![index].orderNumber.toString(),
+                orderStatus: OrderCubit.get(context).getOrderModel.data![index].status.toString(),
+                totalAmount: '',
+              ),
+              separatorBuilder: (context,index)=> SizedBox(height: 3.h,),
+              itemCount: OrderCubit.get(context).getOrderModel.data!.length,
+              padding: EdgeInsets.symmetric(horizontal: 3.w,),
+              physics: BouncingScrollPhysics(),
+            ),
+            fallback: (context)=> Center(child: CircularProgressIndicator()),
+          );
+        },
+        // child: ,
       ),
     );
   }

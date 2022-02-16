@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
+import 'package:nibton_app/screens/my_orders/cubit/cubit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'constant.dart';
@@ -8,11 +9,17 @@ import 'package:easy_localization/easy_localization.dart';
 
 // ignore: use_key_in_widget_constructors
 class OrderDetailBody extends StatefulWidget {
+
+  final dynamic details;
+
+  const OrderDetailBody({Key? key,required this.details}) : super(key: key);
+
   @override
   _OrderDetailBodyState createState() => _OrderDetailBodyState();
 }
 
 class _OrderDetailBodyState extends State<OrderDetailBody> {
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -20,7 +27,13 @@ class _OrderDetailBodyState extends State<OrderDetailBody> {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric( horizontal: 3.w),
       children: [
-        orderCardDetail(),
+        orderCardDetail(
+          itemsNum:widget.details.products!.length.toString(),
+          date:  widget.details.updatedAt.toString().substring(0,10),
+          orderNum: widget.details.orderNumber.toString(),
+          orderStatus: widget.details.status.toString(),
+          totalAmount: '',
+        ),
         SizedBox(height: 2.h,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +52,7 @@ class _OrderDetailBodyState extends State<OrderDetailBody> {
                 ),
                 SizedBox(width: 2.w,),
                 Text(
-                  "(2)",
+                  "(${widget.details.products!.length.toString()})",
                   style: headingStyle.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -60,9 +73,12 @@ class _OrderDetailBodyState extends State<OrderDetailBody> {
         ListView.separated(
             primary: false,
             shrinkWrap: true,
-            itemBuilder: (context, index) => productOrderDetail(),
+            itemBuilder: (context, index) => productOrderDetail(
+                price: widget.details.products[index].price.toString(),
+                qty: widget.details.products[index].quantity.toString()
+            ),
             separatorBuilder: (context, index) => spaceH(10),
-            itemCount: 5),
+            itemCount: widget.details.products.length),
         SizedBox(height: 3.h,),
         Text(
           LocaleKeys.Summary_Details.tr(),

@@ -7,7 +7,15 @@ import 'componnent/body.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // ignore: use_key_in_widget_constructors
-class EditAddressScreen extends StatelessWidget {
+class EditAddressScreen extends StatefulWidget {
+  final String id;
+  const EditAddressScreen({Key? key,required this.id}) : super(key: key);
+
+  @override
+  _EditAddressScreenState createState() => _EditAddressScreenState();
+}
+
+class _EditAddressScreenState extends State<EditAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +38,7 @@ class EditAddressScreen extends StatelessWidget {
                 ),),
               ],
             ),)),
-      body: EditaddressBody(),
+      body: EditaddressBody(id:widget.id,),
     );
   }
 }

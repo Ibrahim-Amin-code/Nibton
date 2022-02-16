@@ -148,7 +148,6 @@ class _WriteRviewBodyState extends State<WriteRviewBody> {
                     String formattedDate =
                         DateFormat('yyyy-MM-dd – kk:mm').format(now);
                     HomeCubit.get(context).addReview(
-                      // id: widget.id,
                         productId:  widget.id,
                         comment: message.text.toString(),
                         rate: rate,

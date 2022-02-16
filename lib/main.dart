@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nibton_app/screens/Authnitication/forgetPassword/cubit/cubit.dart';
 import 'package:nibton_app/screens/Authnitication/sign_in/login_cubit/cubit.dart';
-import 'package:nibton_app/screens/Review/review.dart';
-import 'package:nibton_app/screens/Review/write%20review/write_review.dart';
 import 'package:nibton_app/screens/checkout/checkout_cubit/checkout_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/layout/cubit/cubit.dart';
-import 'package:nibton_app/screens/menu_screens/profile/get_profile_cubit/cubit.dart';
 import 'package:nibton_app/screens/menu_screens/profile/update_profile_cubit/update_profle_cubit.dart';
+import 'package:nibton_app/screens/my_orders/cubit/cubit.dart';
 import 'package:nibton_app/screens/splash/splashScreen.dart';
 import 'package:sizer/sizer.dart';
 import 'generated/codegen_loader.g.dart';
@@ -24,18 +22,17 @@ Future<void> main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.inti();
 
-
-runApp(  EasyLocalization(
+  runApp(EasyLocalization(
     supportedLocales: [Locale('en', ''), Locale('ar', '')],
     path: 'assets/translations', // <-- change the path of the translation files
     // fallbackLocale: Locale('en', ''),
     assetLoader: CodegenLoader(),
-    child: MyApp(),));
-
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-
+// finish all address
   @override
   Widget build(BuildContext context) {
     return Sizer(
@@ -43,9 +40,13 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
             providers: [
               BlocProvider<AppCubit>(create: (context) => AppCubit()),
+              BlocProvider<OrderCubit>(
+                  create: (context) => OrderCubit()..getOrders()),
               BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
-              BlocProvider<ForgetPasswordCubit>(create: (context) => ForgetPasswordCubit()),
-              BlocProvider<UpdateProfileCubit>(create: (context) => UpdateProfileCubit()),
+              BlocProvider<ForgetPasswordCubit>(
+                  create: (context) => ForgetPasswordCubit()),
+              BlocProvider<UpdateProfileCubit>(
+                  create: (context) => UpdateProfileCubit()),
               BlocProvider<HomeCubit>(
                   create: (context) => HomeCubit()
                     ..getShops()
@@ -53,11 +54,12 @@ class MyApp extends StatelessWidget {
                     ..contactInfo()
                     ..getBanners()
                     ..getCard()
-                    ..getProducts(id: '',brandId: '')
+                    ..getProducts(id: '', brandId: '')
                     ..getWishList()
                     ..getAllOffers()
                     ..getReviews(id: '')),
-              BlocProvider<CheckoutCubit>(create: (context) => CheckoutCubit()..getAddresses()),
+              BlocProvider<CheckoutCubit>(
+                  create: (context) => CheckoutCubit()..getAddresses()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

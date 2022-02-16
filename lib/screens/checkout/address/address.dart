@@ -9,7 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 // ignore: use_key_in_widget_constructors
 class AddressScreen extends StatefulWidget {
-  @override
+    @override
   _AddressScreenState createState() => _AddressScreenState();
 }
 
@@ -19,7 +19,7 @@ class _AddressScreenState extends State<AddressScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this, );
     super.initState();
   }
 
@@ -44,6 +44,7 @@ class _AddressScreenState extends State<AddressScreen>
               child: TabBar(
                   controller: _tabController,
                   labelColor: Colors.white,
+
                   unselectedLabelColor: HexColor("#333333"),
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),

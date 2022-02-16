@@ -181,6 +181,7 @@ class HomeScreen extends StatelessWidget {
                     InkWell(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AllBrands()));
+                        // Navigator.pushNamed(context, routeName)
                       },
                       child: Row(
                         children: [

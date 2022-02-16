@@ -30,7 +30,9 @@ class _ReviewBodyState extends State<ReviewBody> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit,HomeState>(
-      listener: (context,state){},
+      listener: (context,state){
+        // HomeCubit.get(context).
+      },
       builder: (context,state){
         return ListView(
           primary: true,
