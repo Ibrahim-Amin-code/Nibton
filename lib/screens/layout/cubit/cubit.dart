@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nibton_app/models/login_model.dart';
 import 'package:nibton_app/screens/categories/categories_screen.dart';
 import 'package:nibton_app/screens/home/home_screen.dart';
 import 'package:nibton_app/screens/layout/cubit/states.dart';
