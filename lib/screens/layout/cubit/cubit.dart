@@ -8,12 +8,19 @@ import 'package:nibton_app/screens/more/more_screen.dart';
 import 'package:nibton_app/screens/my_orders/my_orders_screen.dart';
 import 'package:nibton_app/screens/offers/offers_screen.dart';
 
-class AppCubit extends Cubit<AppStates>{
+class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
 
   static AppCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
+
+  int? selectedItem;
+
+  void addressSelection({int? selected}) {
+    selectedItem = selected;
+    emit(SelectionAddressState());
+  }
 
   List<Widget> screens = [
     CategoriesScreen(),
