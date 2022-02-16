@@ -8,6 +8,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 // ignore: use_key_in_widget_constructors
 class OrderDetailScreen extends StatelessWidget {
+  final dynamic details;
+
+  const OrderDetailScreen({Key? key,required this.details}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class OrderDetailScreen extends StatelessWidget {
                 ],
               ),
             ),)),
-      body: OrderDetailBody(),
+      body: OrderDetailBody(details: details,),
     );
   }
 }

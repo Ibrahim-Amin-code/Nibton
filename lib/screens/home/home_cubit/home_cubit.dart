@@ -166,7 +166,7 @@ class HomeCubit extends Cubit<HomeState> {
           backgroundColor: HexColor("#B59945"),
           textColor: HexColor('#727C8E'),
           fontSize: 16.0);
-
+          getCard();
     }).catchError((error){
       emit(AddToCartErrorState(error.toString()));
       print(error.toString());
@@ -353,6 +353,7 @@ List cart =[];
           backgroundColor: Colors.green,
           textColor: HexColor('#727C8E'),
           fontSize: 16.0);
+      getReviews(id: productId);
       print(value.data);
       emit(AddReviewSuccessState());
     }).catchError((error){

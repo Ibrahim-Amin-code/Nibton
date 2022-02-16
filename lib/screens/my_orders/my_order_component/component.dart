@@ -8,7 +8,16 @@ import 'package:sizer/sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 
-Widget buildMyOrderCardItem(context)=> Container(
+Widget buildMyOrderCardItem({
+ required context,
+  dynamic details,
+ required String orderNum,
+ required String totalAmount,
+ required String itemsNum,
+ required String orderStatus,
+ required String date,
+
+})=> Container(
   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
   decoration: BoxDecoration(
     color: Colors.white,
@@ -25,7 +34,7 @@ Widget buildMyOrderCardItem(context)=> Container(
               color: HexColor('#333333')
           ),),
           Spacer(),
-          Text('#202000609',style: TextStyle(
+          Text(orderNum,style: TextStyle(
               fontSize: 13.sp,
               fontWeight: FontWeight.w600,
               fontFamily: 'OpenSans',
@@ -44,7 +53,7 @@ Widget buildMyOrderCardItem(context)=> Container(
               color: HexColor('#333333')
           ),),
           Spacer(),
-          Text('SR 3441.28',style: TextStyle(
+          Text(totalAmount,style: TextStyle(
               fontSize: 13.sp,
               fontWeight: FontWeight.w600,
               fontFamily: 'OpenSans',
@@ -63,13 +72,12 @@ Widget buildMyOrderCardItem(context)=> Container(
               color: HexColor('#333333')
           ),),
           Spacer(),
-          Text('10',style: TextStyle(
+          Text(itemsNum,style: TextStyle(
               fontSize: 13.sp,
               fontWeight: FontWeight.w600,
               fontFamily: 'OpenSans',
               color: HexColor('#4CB8BA')
           ),),
-
         ],
       ),
       SizedBox(height: 2.h,),
@@ -82,7 +90,7 @@ Widget buildMyOrderCardItem(context)=> Container(
               color: HexColor('#333333')
           ),),
           Spacer(),
-          Text('Order Placed',style: TextStyle(
+          Text(orderStatus,style: TextStyle(
               fontSize: 13.sp,
               fontWeight: FontWeight.w600,
               fontFamily: 'OpenSans',
@@ -101,7 +109,7 @@ Widget buildMyOrderCardItem(context)=> Container(
               color: HexColor('#333333')
           ),),
           Spacer(),
-          Text('June 09, 2020',style: TextStyle(
+          Text(date,style: TextStyle(
               fontSize: 13.sp,
               fontWeight: FontWeight.w600,
               fontFamily: 'OpenSans',
@@ -112,7 +120,9 @@ Widget buildMyOrderCardItem(context)=> Container(
       ),
       SizedBox(height: 3.h,),
       InkWell(
-        onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetailScreen())),
+        onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetailScreen(
+           details: details,
+        ))),
         child: Container(
           height: 5.h,
           width: 30.w,

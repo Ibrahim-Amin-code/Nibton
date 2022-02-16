@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/components/constants.dart';
+import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 
 import 'componnent/body.dart';
 import 'package:sizer/sizer.dart';
@@ -17,6 +18,9 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -5,7 +5,14 @@ import 'package:sizer/sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 
-orderCardDetail() {
+orderCardDetail({
+  required String orderNum,
+  required String totalAmount,
+  required String itemsNum,
+  required String orderStatus,
+  required String date,
+
+}) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     decoration: BoxDecoration(
@@ -22,7 +29,7 @@ orderCardDetail() {
                     fontWeight: FontWeight.w400,
                     color: HexColor("#333333"))),
             Text(
-              "# 202000609",
+              orderNum,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -41,7 +48,7 @@ orderCardDetail() {
                     fontWeight: FontWeight.w400,
                     color: HexColor("#333333"))),
             Text(
-              "SAR 3442.45",
+              totalAmount,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -60,7 +67,7 @@ orderCardDetail() {
                     fontWeight: FontWeight.w400,
                     color: HexColor("#333333"))),
             Text(
-              "10",
+              itemsNum,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -79,7 +86,7 @@ orderCardDetail() {
                     fontWeight: FontWeight.w400,
                     color: HexColor("#333333"))),
             Text(
-              "Order Placed",
+              orderStatus,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -98,7 +105,7 @@ orderCardDetail() {
                     fontWeight: FontWeight.w400,
                     color: HexColor("#333333"))),
             Text(
-              "9 June 2022",
+              date,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -113,7 +120,10 @@ orderCardDetail() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-productOrderDetail() {
+productOrderDetail({
+  required String price,
+  required String qty,
+}) {
   return Container(
     padding:  EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
     decoration: BoxDecoration(
@@ -154,7 +164,7 @@ productOrderDetail() {
             ),
             SizedBox(height: 1.5.h,),
             Text(
-              "SAR 399.78",
+              "Price:  $price",
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
@@ -162,7 +172,7 @@ productOrderDetail() {
             ),
             SizedBox(height: 1.5.h,),
             Text(
-              "Qty: 3",
+              "Qty:  $qty",
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,

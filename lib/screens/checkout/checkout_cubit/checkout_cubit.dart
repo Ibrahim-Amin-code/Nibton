@@ -19,7 +19,6 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   // List addressesData=[];
 
   void getAddresses(
-  // required String id,
 )async {
     emit(CheckoutLoadingState());
     String token = await CacheHelper.getData(key: 'token');
@@ -104,5 +103,8 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     });
 
   }
+
+
+
 
 }

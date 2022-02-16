@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/components/constants.dart';
+import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:nibton_app/screens/editAddress/editAddress.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-selectAddressCardStatic(context) {
+selectAddressCardStatic({
+  required String fullName,
+  required String addressTitle,
+  required String state,
+  required String city,
+  required String addressId,
+  required context,
+}) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     decoration: BoxDecoration(
@@ -27,7 +35,7 @@ selectAddressCardStatic(context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Shopping Address",
+              addressTitle,
               style: headingStyle.copyWith(
                   color: HexColor("#4CB8BA"),
                   fontSize: 13.sp,
@@ -38,7 +46,7 @@ selectAddressCardStatic(context) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EditAddressScreen(id: '',)));
+                        builder: (context) => EditAddressScreen(id: addressId,)));
               },
               child: Container(
                   padding:
@@ -65,7 +73,7 @@ selectAddressCardStatic(context) {
           ],
         ),
         Text(
-          "ASHRAf ALMASHHARI",
+          fullName,
           style: headingStyle.copyWith(
               color: HexColor("#515C6F"),
               fontSize: 13.sp,
@@ -73,7 +81,7 @@ selectAddressCardStatic(context) {
         ),
         SizedBox(height: 0.5.h,),
         Text(
-          "Saudi Arabya",
+          city,
           style: headingStyle.copyWith(
               color: HexColor("#515C6F").withOpacity(0.5),
               fontSize: 11.sp,
@@ -81,7 +89,7 @@ selectAddressCardStatic(context) {
         ),
         SizedBox(height: 0.5.h,),
         Text(
-          "Riyadh",
+          state,
           style: headingStyle.copyWith(
               color: HexColor("#4CB8BA"),
               fontSize: 12.sp,
@@ -94,7 +102,13 @@ selectAddressCardStatic(context) {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-orderItemCard() {
+orderItemCard({
+  required String image,
+  required String Qty,
+  required String price,
+  required String name,
+  required context,
+}) {
   return Container(
       padding:  EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
       decoration: BoxDecoration(
@@ -113,14 +127,10 @@ orderItemCard() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-                // width: 40.w,
-                height: 12.h,
-                child: Image.asset(
-
-                  "assets/images/Image 37.png",
-                  fit: BoxFit.contain,
-                  // color: Colors.red,
-                )),
+              width: 25.w,
+              height: 12.h,
+                child: customCachedNetworkImage(url: image, context: context, fit: BoxFit.contain,),
+            ),
               SizedBox(width: 2.w,),
             Padding(
               padding:  EdgeInsets.only(top: 1.h),
@@ -130,21 +140,21 @@ orderItemCard() {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Acer Aspire E",
+                    name,
                     style: headingStyle.copyWith(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                         color: HexColor("#515C6F")),
                   ),
                   Text(
-                    "SAR 550.00",
+                    "SAR:  $price",
                     style: headingStyle.copyWith(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
                         color: HexColor("#4CB8BA")),
                   ),
                   Text(
-                    "Qty: 3",
+                    "Qty:  $Qty",
                     style: headingStyle.copyWith(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w600,

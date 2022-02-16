@@ -8,6 +8,7 @@ import 'package:nibton_app/screens/checkout/checkout_cubit/checkout_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/layout/cubit/cubit.dart';
 import 'package:nibton_app/screens/menu_screens/profile/update_profile_cubit/update_profle_cubit.dart';
+import 'package:nibton_app/screens/my_orders/cubit/cubit.dart';
 import 'package:nibton_app/screens/splash/splashScreen.dart';
 import 'package:sizer/sizer.dart';
 import 'generated/codegen_loader.g.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
             providers: [
               BlocProvider<AppCubit>(create: (context) => AppCubit()),
+              BlocProvider<OrderCubit>(
+                  create: (context) => OrderCubit()..getOrders()),
               BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
               BlocProvider<ForgetPasswordCubit>(
                   create: (context) => ForgetPasswordCubit()),
