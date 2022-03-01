@@ -12,6 +12,12 @@ import 'componnent/placeOrderConstant.dart';
 
 // ignore: use_key_in_widget_constructors
 class PlaceOrder extends StatefulWidget {
+
+  static  List productData = [];
+
+  // price!.forEach((element) {
+  //    totalPrice += element.price * element.quantity;
+  //  });
   @override
   _PlaceOrderState createState() => _PlaceOrderState();
 }
@@ -27,13 +33,17 @@ class _PlaceOrderState extends State<PlaceOrder> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            (AppCubit.get(context).selectedItem != null)? selectAddressCardStatic(
+            (AppCubit.get(context).selectedItem != null)?
+            selectAddressCardStatic(
+
                 fullName: UserAddress.name,
                 addressTitle: UserAddress.addressTitle,
                 state: UserAddress.state,
                 city: UserAddress.city,
                 addressId: UserAddress.addressId,
                 context: context) : Container(),
+
+
             spaceH(15),
             Text(
               LocaleKeys.Your_Orders.tr() + '( ${HomeCubit.get(context).cart.length.toString()} )',
@@ -46,13 +56,16 @@ class _PlaceOrderState extends State<PlaceOrder> {
             ListView.separated(
                 primary: false,
                 shrinkWrap: true,
-                itemBuilder: (context, index) => orderItemCard(
-                  price: HomeCubit.get(context).cart[index]['price'].toString(),
-                  image: HomeCubit.get(context).cart[index]['cover_img'].toString(),
-                  context: context,
-                  name: HomeCubit.get(context).cart[index]['name'].toString(),
-                  Qty:HomeCubit.get(context).cart[index]['quantity'].toString()
-                ),
+                itemBuilder: (context, index) {
+                  PlaceOrder.productData.addAll(HomeCubit.get(context).cart);
+                 return orderItemCard(
+                      price: HomeCubit.get(context).cart[index]['price'].toString(),
+                      image: HomeCubit.get(context).cart[index]['cover_img'].toString(),
+                      context: context,
+                      name: HomeCubit.get(context).cart[index]['name'].toString(),
+                      Qty:HomeCubit.get(context).cart[index]['quantity'].toString()
+                  );
+                },
                 separatorBuilder: (context, index) => spaceH(10),
                 itemCount: HomeCubit.get(context).cart.length),
             spaceH(15),

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nibton_app/models/login_model.dart';
 import 'package:nibton_app/network/cache/cache_helper.dart';
 import 'package:nibton_app/network/dio/dio_helper.dart';
@@ -30,11 +32,11 @@ class LoginCubit extends Cubit<LoginStates> {
       },
       url: Login,
     ).then((value) async {
-
       loginModel = LoginModel.fromJson(value.data);
-      CacheHelper.saveData(value: loginModel.data!.token ,key: 'token');
-      CacheHelper.saveData(value: loginModel.data!.name ,key: 'username');
-      CacheHelper.saveData(value: loginModel.data!.id.toString() ,key: 'userID');
+      CacheHelper.saveData(value: loginModel.data!.token, key: 'token');
+      CacheHelper.saveData(value: loginModel.data!.name, key: 'username');
+      CacheHelper.saveData(
+          value: loginModel.data!.id.toString(), key: 'userID');
       print(
           '========================================================= ${loginModel.msg}=');
       print(
@@ -48,5 +50,30 @@ class LoginCubit extends Cubit<LoginStates> {
       print(
           'error----------------------------------------------${error.toString()}');
     });
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<void> signup(BuildContext context) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+
+      // Getting users credential
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      User? user = result.user;
+
+      if (result != null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => LayoutScreen(index: 0)));
+      } // if result not null we simply call the MaterialpageRoute,
+      // for go to the HomePage screen
+    }
   }
 }

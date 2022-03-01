@@ -17,6 +17,7 @@ class CodegenLoader extends AssetLoader {
   static const Map<String, dynamic> ar = {
     "Log_In": "تسجيل الدخول",
     "SignUp": "تسجيل جديد",
+
     "Skip": "<< لاحقا",
     "TitlePassword": "أدخل عنوان البريد الإلكتروني الذي استخدمته لإنشاء حسابك وسنرسل لك رابطًا عبر البريد الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك",
     "Welcome , Please Create your Account": "مرحبًا ، الرجاء إنشاء حسابك",
@@ -81,6 +82,7 @@ class CodegenLoader extends AssetLoader {
     "Change_Password": "تغيير كلمة المرور",
     "E_Mail": "البريد الاكتروني",
     "Select_Gender": "إختار النوع",
+    "PaymentMethod":"طريقة الدفع",
     "Select_Bithday": "تاريخ الميلاد",
     "Choose_Photo": "أختار  صورة",
     "NoAdsYet": "لا يوجد اعلانات حتي الان",
@@ -205,6 +207,7 @@ class CodegenLoader extends AssetLoader {
     "Track":"TRACK YOUR ORDER HERE",
 
     "PROCEED TO PAY":"PROCEED TO PAY",
+    "PaymentMethod":"Payment Method",
     "New Address":"New Address",
     "Add Address":"Add Address",
     "Your Orders":"Your Orders",

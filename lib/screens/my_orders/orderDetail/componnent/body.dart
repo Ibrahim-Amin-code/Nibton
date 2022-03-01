@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
+import 'package:nibton_app/network/cache/cache_helper.dart';
 import 'package:nibton_app/screens/my_orders/cubit/cubit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:nibton_app/screens/components/constants.dart';
@@ -19,7 +20,19 @@ class OrderDetailBody extends StatefulWidget {
 }
 
 class _OrderDetailBodyState extends State<OrderDetailBody> {
+  String lang = '';
+  getLang()async{
+    final String data = await CacheHelper.getData(key: 'lang') ?? '';
+    setState(() {
+      lang = data;
+    });
+  }
 
+  @override
+  void initState() {
+    this.getLang();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -28,10 +41,12 @@ class _OrderDetailBodyState extends State<OrderDetailBody> {
       padding: EdgeInsets.symmetric( horizontal: 3.w),
       children: [
         orderCardDetail(
+          paymentMethod: widget.details.paymentMethod.toString(),
           itemsNum:widget.details.products!.length.toString(),
           date:  widget.details.updatedAt.toString().substring(0,10),
-          orderNum: widget.details.orderNumber.toString(),
+          orderNum: widget.details.id.toString(),
           orderStatus: widget.details.status.toString(),
+          price: widget.details.products,
           totalAmount: '',
         ),
         SizedBox(height: 2.h,),
@@ -74,6 +89,9 @@ class _OrderDetailBodyState extends State<OrderDetailBody> {
             primary: false,
             shrinkWrap: true,
             itemBuilder: (context, index) => productOrderDetail(
+              context: context,
+                image: widget.details.products[index].coverImg.toString(),
+                productName: widget.details.products[index].name.toString(),
                 price: widget.details.products[index].price.toString(),
                 qty: widget.details.products[index].quantity.toString()
             ),
@@ -86,13 +104,33 @@ class _OrderDetailBodyState extends State<OrderDetailBody> {
               fontSize: 14.sp, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         SizedBox(height: 2.h,),
-        paymentDetail(),
+        paymentDetail(widget.details.products),
         SizedBox(height: 2.h,),
         deliverTime(),
         spaceH(15),
         cancelOrderButton(press: () {}, title: LocaleKeys.Order_Cancel.tr()),
         SizedBox(height: 2.h,),
-        deliverAddress(),
+        //"address": {
+        //                 "id": 3,
+        //                 "userId": 74,
+        //                 "address_name": "egypt",
+        //                 "full_name": "ibrahim amin",
+        //                 "email": "user@user.com",
+        //                 "phone": "01022952483",
+        //                 "city": "metghamer",
+        //                 "state": "elmansoura",
+        //                 "full_address": "cairo",
+        //                 "created_at": "2022-01-30T20:58:24.000000Z",
+        //                 "updated_at": "2022-01-30T20:58:24.000000Z",
+        //                 "deleted_at": null
+        deliverAddress(
+          addressId: widget.details.address.id.toString(),
+          state: widget.details.address.state.toString(),
+          fullName: widget.details.address.fullName.toString(),
+          fullAddress: widget.details.address.fullAddress.toString(),
+          addressName: widget.details.address.addressName.toString(),
+
+        ),
         SizedBox(height: 2.h,),
 
       ],

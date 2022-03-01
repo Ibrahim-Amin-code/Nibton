@@ -130,9 +130,8 @@ class _SignInFormState extends State<SignInForm> {
                   },
                   text: LocaleKeys.Log_In.tr(),
                 ),
-                SizedBox(
-                  height: 3.h,
-                ),
+
+
               ],
             ),
           ),

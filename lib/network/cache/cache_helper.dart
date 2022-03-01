@@ -14,7 +14,7 @@ class CacheHelper
       }
 
 
-   static Future<bool> clearData() async
+   static  clearData() async
    {
      SharedPreferences  sharedPreferences = await SharedPreferences.getInstance();
      print('-----------------------------------sharedPreferences.clear()');
@@ -23,7 +23,7 @@ class CacheHelper
    }
 
 
-   static Future<bool> saveData({
+   static  saveData({
     required String key,
     required dynamic value,
   }) async

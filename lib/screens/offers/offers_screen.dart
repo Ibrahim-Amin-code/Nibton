@@ -53,21 +53,24 @@ class OffersScreen extends StatelessWidget {
                 ListView.separated(
                     primary: false,
                     shrinkWrap: true,
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                            ProductDetailsScreen(details: HomeCubit.get(context).allOffersModel.data![index])
-                        ));
-                      },
-                      child: buildOffersCard(
-                        image: HomeCubit.get(context).allOffersModel.data![index].coverImg.toString(),
-                        price: HomeCubit.get(context).allOffersModel.data![index].price.toString(),
-                        newPrice: HomeCubit.get(context).allOffersModel.data![index].offer!.price.toString(),
-                        context: context,
-                      ),
-                    ) ,
+                    itemBuilder: (context, index) {
+                      return
+                        InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                              ProductDetailsScreen(details: HomeCubit.get(context).allOffersModel.data![index])
+                          ));
+                        },
+                        child: buildOffersCard(
+                          image: HomeCubit.get(context).allOffersModel.data![index].coverImg.toString(),
+                          price: HomeCubit.get(context).allOffersModel.data![index].price.toString(),
+                          newPrice: HomeCubit.get(context).allOffersModel.data![index].offer!.price.toString(),
+                          context: context,
+                        ),
+                      );
+                    },
                     separatorBuilder: (context, index) =>SizedBox(height: 10,),
-                    itemCount:HomeCubit.get(context).allOffersModel.data!.length),
+                    itemCount:  HomeCubit.get(context).allOffersModel.data!.length),
               ],
             ),
             fallback: (context)=>Center(child: CircularProgressIndicator()),

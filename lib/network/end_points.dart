@@ -22,3 +22,4 @@ const AllReviews = 'all-reviews';
 const AddAddress = 'add-adress';
 const DeleteAddress = 'delete-adress';
 const GetOrder = 'get-buyer-order';
+const SendOrder = 'send-order';

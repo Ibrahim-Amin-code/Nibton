@@ -12,16 +12,6 @@ class LoginModel {
     msg = json['msg'];
     data = (json['data'] != null ? new Data.fromJson(json['data']) : null);
   }
-
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   data['status'] = this.status;
-  //   data['msg'] = this.msg;
-  //   if (this.data != null) {
-  //     data['data'] = this.data.toJson();
-  //   }
-  //   return data;
-  // }
 }
 
 class Data {
@@ -43,30 +33,27 @@ class Data {
   late String deviceToken;
   late String createdAt;
   late String updatedAt;
-  late Country country;
-  late dynamic city;
 
-  Data(
-      {required this.id,
-      required this.countryId,
-      required this.cityId,
-      required this.stateID,
-      required this.name,
-      required this.email,
-      required this.dateOfBirth,
-      required this.mobile,
-      required this.photo,
-      required this.gender,
-      required this.detail,
-      required this.status,
-      required this.type,
-      required this.isActivated,
-      required this.token,
-      required this.deviceToken,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.country,
-      required this.city});
+  Data({
+    required this.id,
+    required this.countryId,
+    required this.cityId,
+    required this.stateID,
+    required this.name,
+    required this.email,
+    required this.dateOfBirth,
+    required this.mobile,
+    required this.photo,
+    required this.gender,
+    required this.detail,
+    required this.status,
+    required this.type,
+    required this.isActivated,
+    required this.token,
+    required this.deviceToken,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -87,37 +74,6 @@ class Data {
     deviceToken = json['device_token'];
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'];
-    country = (json['country'] != null
-        ? new Country.fromJson(json['country'])
-        : null)!;
-    city = json['city'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['countryId'] = this.countryId;
-    data['cityId'] = this.cityId;
-    data['stateID'] = this.stateID;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['dateOfBirth'] = this.dateOfBirth;
-    data['mobile'] = this.mobile;
-    data['photo'] = this.photo;
-    data['gender'] = this.gender;
-    data['detail'] = this.detail;
-    data['status'] = this.status;
-    data['type'] = this.type;
-    data['is_activated'] = this.isActivated;
-    data['token'] = this.token;
-    data['device_token'] = this.deviceToken;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.country != null) {
-      data['country'] = this.country.toJson();
-    }
-    data['city'] = this.city;
-    return data;
   }
 }
 

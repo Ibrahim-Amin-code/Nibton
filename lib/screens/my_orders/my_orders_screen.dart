@@ -18,7 +18,6 @@ class MyOrdersScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: HexColor('#F5F6F8'),
-
       appBar: PreferredSize(
           preferredSize: Size(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height*0.4),
           child: Container(
@@ -46,11 +45,13 @@ class MyOrdersScreen extends StatelessWidget {
             condition: state is! OrderLoadingState,
             builder: (context) => ListView.separated(
               itemBuilder: (context,index)=>buildMyOrderCardItem(
+                paymentMethod: OrderCubit.get(context).getOrderModel.data![index].paymentMethod.toString(),
+                price: OrderCubit.get(context).getOrderModel.data![index].products,
                 details: OrderCubit.get(context).getOrderModel.data![index],
                 context: context,
                 itemsNum: OrderCubit.get(context).getOrderModel.data![index].products!.length.toString(),
                 date:  OrderCubit.get(context).getOrderModel.data![index].updatedAt.toString().substring(0,10),
-                orderNum: OrderCubit.get(context).getOrderModel.data![index].orderNumber.toString(),
+                orderNum: OrderCubit.get(context).getOrderModel.data![index].id.toString(),
                 orderStatus: OrderCubit.get(context).getOrderModel.data![index].status.toString(),
                 totalAmount: '',
               ),

@@ -7,3 +7,11 @@ class OrderErrorState extends OrderState{
   final String error;
   OrderErrorState(this.error);
 }
+
+class SendOrderLoadingState extends OrderState{}
+class SendOrderSuccessState extends OrderState{}
+class SendOrderErrorState extends OrderState{
+  final String error;
+  SendOrderErrorState(this.error);
+}
+

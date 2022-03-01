@@ -68,7 +68,6 @@ class CategoriesScreen extends StatelessWidget {
                                context,
                                MaterialPageRoute(
                                    builder: (context) => SeeAllScreen(
-
                                    )));
                          },
                          child: buildCategoriesCard(

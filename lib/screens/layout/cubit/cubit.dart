@@ -15,10 +15,22 @@ class AppCubit extends Cubit<AppStates> {
   int currentIndex = 0;
 
   int? selectedItem;
+  int? selectedCash;
+  int? selectedVisa;
 
   void addressSelection({int? selected}) {
     selectedItem = selected;
     emit(SelectionAddressState());
+  }
+
+  void visaSelection({int? selected}) {
+    selectedVisa = selected;
+    emit(SelectionVisaState());
+  }
+
+  void cashSelection({int? selected}) {
+    selectedCash = selected;
+    emit(SelectionCashState());
   }
 
   List<Widget> screens = [
@@ -28,15 +40,6 @@ class AppCubit extends Cubit<AppStates> {
     MyOrdersScreen(),
     MoreScreen(),
   ];
-
-  // List<String> titles = [
-  //   'Categories',
-  //   'Offers',
-  //   'Home',
-  //   'My Orders',
-  //   'More',
-  // ];
-  // LoginModel loginModel = LoginModel();
 
   void changeIndex(int index) {
     currentIndex = index;
@@ -49,5 +52,31 @@ class AppCubit extends Cubit<AppStates> {
   //     emit(AppChangeModeState());
   //   });
   // }
+
+  // Map<int,num> counter ={};
+  var counter =  Map<num, num>();
+
+
+
+  void increaseQuantity({required int productId,}){
+    counter[productId]=0;
+     counter[productId] = (counter[productId]! +1);
+   emit(IncreaseQuantityState());
+  }
+
+  void decreaseQuantity({required int productId}){
+      counter[productId] = (counter[productId]! -1);
+      if(counter[productId]! < 1){
+        counter[productId] =1;
+      }
+
+    emit(DecreaseQuantityState());
+
+  }
+
+
+
+
+
 
 }
