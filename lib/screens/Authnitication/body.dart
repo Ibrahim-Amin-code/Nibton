@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/network/cache/cache_helper.dart';
+import 'package:nibton_app/screens/Authnitication/sign_in/login_cubit/cubit.dart';
 import 'package:nibton_app/screens/Authnitication/sign_in/signIn_form.dart';
 import 'package:nibton_app/screens/Authnitication/sign_up/signup.dart';
 import 'package:nibton_app/screens/components/constants.dart';
@@ -83,6 +84,32 @@ class _AuthniticationBodyState extends State<AuthniticationBody> {
               ),
             ),
             SizedBox(height: 3.h,),
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        LoginCubit.get(context).signup(context);
+                      },
+                      child: Image.asset(
+                          'assets/images/39216d73519bca962bd4a01f3e8f4a4b.png',
+
+                      )),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        // _loginWithFacebook();
+                      },
+                      child: Image.asset('assets/images/Group 64.png')),
+                ],
+              ),
+            ),
+            SizedBox(height: 1.h,),
             Center(
               child: Text(
                 LocaleKeys.Don_have_an_account.tr(),

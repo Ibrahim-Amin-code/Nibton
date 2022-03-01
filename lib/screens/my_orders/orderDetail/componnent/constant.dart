@@ -73,8 +73,27 @@ cancelOrderButton({required String title, required VoidCallback press}) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
+//"address": {
+//                 "id": 3,
+//                 "userId": 74,
+//                 "address_name": "egypt",
+//                 "full_name": "ibrahim amin",
+//                 "email": "user@user.com",
+//                 "phone": "01022952483",
+//                 "city": "metghamer",
+//                 "state": "elmansoura",
+//                 "full_address": "cairo",
+//                 "created_at": "2022-01-30T20:58:24.000000Z",
+//                 "updated_at": "2022-01-30T20:58:24.000000Z",
+//                 "deleted_at": null
 
-deliverAddress(){
+deliverAddress({
+  required String addressName,
+  required String fullName,
+  required String fullAddress,
+  required String state,
+  required String addressId,
+}){
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     decoration: BoxDecoration(
@@ -83,25 +102,25 @@ deliverAddress(){
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text("Shipping Address",
+        Text(addressName,
             style: headingStyle.copyWith(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w700,
                 color: HexColor("#4CB8BA"))),
         SizedBox(height: 2.h,),
-        Text("ASHRAF ELMESHHARY",
+        Text(fullName,
             style: headingStyle.copyWith(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w700,
                 color: HexColor("#515C6F"))),
         spaceH(10),
-        Text("Saudi Arabia",
+        Text(fullAddress,
             style: headingStyle.copyWith(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w700,
                 color: HexColor("#515C6F").withOpacity(0.5))),
         spaceH(10),
-        Text("Riyadh",
+        Text(state,
             style: headingStyle.copyWith(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w700,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:nibton_app/network/cache/cache_helper.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'package:nibton_app/screens/layout/layout_screen.dart';
@@ -8,7 +9,7 @@ import 'package:sizer/sizer.dart';
 class AuthniticationScreen extends StatefulWidget {
 
   static  String token =  '';
-
+  static LocationData? userLocation;
 
   const AuthniticationScreen({Key? key}) : super(key: key);
 
@@ -19,6 +20,7 @@ class AuthniticationScreen extends StatefulWidget {
 class _AuthniticationScreenState extends State<AuthniticationScreen> {
 
   bool isLogin = false;
+
 
   getScreen()async{
     // setState(() {
@@ -36,9 +38,44 @@ class _AuthniticationScreenState extends State<AuthniticationScreen> {
       });
     }
   }
+
+  late bool _serviceEnabled;
+  late PermissionStatus _permissionGranted;
+
+  Future<void> _getUserLocation() async {
+    Location location = Location();
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    // Check if permission is granted
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    final _locationData = await location.getLocation();
+    setState(() {
+      AuthniticationScreen.userLocation = _locationData;
+      print(AuthniticationScreen.userLocation!.latitude.toString());
+      print(AuthniticationScreen.userLocation!.longitude.toString());
+    });
+  }
+
+
+
   @override
   void initState() {
     this.getScreen();
+    _getUserLocation();
     super.initState();
   }
 

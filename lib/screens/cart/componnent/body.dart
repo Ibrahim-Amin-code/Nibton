@@ -5,19 +5,24 @@ import 'package:nibton_app/screens/checkout/checkout.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/home/home_cubit/states.dart';
+import 'package:nibton_app/screens/layout/cubit/cubit.dart';
+import 'package:nibton_app/screens/layout/cubit/states.dart';
 import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
+import 'package:nibton_app/screens/my_orders/cubit/states.dart';
 
 import 'constant.dart';
 import 'package:sizer/sizer.dart';
 
 // ignore: use_key_in_widget_constructors
 class CartBody extends StatefulWidget {
+
   @override
   _CartBodyState createState() => _CartBodyState();
 }
 
 class _CartBodyState extends State<CartBody> {
-  int count = 1;
+
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
@@ -34,56 +39,58 @@ class _CartBodyState extends State<CartBody> {
             ),
           ));
         }
-      },
+        if (state is SendOrderSuccessState){
+          HomeCubit.get(context).cart.clear();
+        }
+        },
       builder: (context, state) {
         return ConditionalBuilder(
           condition: state is! GetCartLoadingState,
-          builder: (context) => (HomeCubit.get(context).cart.isNotEmpty)
-              ? ListView(
-                  primary: true,
+          builder: (context) =>  (HomeCubit.get(context).cart.isNotEmpty)?ListView(
+            primary: true,
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
+            children: [
+              ListView.separated(
+                  primary: false,
                   shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
-                  children: [
-                    ListView.separated(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => cartItemCard(
-                              image: HomeCubit.get(context)
-                                  .cart[index]['cover_img']
-                                  .toString(),
-                              name: HomeCubit.get(context)
-                                  .cart[index]['name']
-                                  .toString(),
-                              price: HomeCubit.get(context)
-                                  .cart[index]['price']
-                                  .toString(),
-                            ),
-                        separatorBuilder: (context, index) => SizedBox(
-                              height: 2.h,
-                            ),
-                        itemCount: HomeCubit.get(context).cart.length),
-                    spaceH(20),
-                    optionCard(),
-                    spaceH(20),
-                    placeOrderButton(
-                        context: context,
-                        title: "PLACE THIS ORDER SR 1100.00",
-                        press: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CheckoutScren())))
-                  ],
-                )
-              : Container(
-                  child: Text(
-                  'No Products Here',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 15.sp,
-                    fontFamily: 'OpenSans',
-                    fontWeight: FontWeight.bold,
+                  itemBuilder: (context, index){
+                    return
+                    cartItemCard(
+                      id: HomeCubit.get(context).cart[index]['id'],
+                      image: HomeCubit.get(context).cart[index]['cover_img']
+                          .toString(),
+                      name: HomeCubit.get(context)
+                          .cart[index]['name']
+                          .toString(),
+                      price: HomeCubit.get(context)
+                          .cart[index]['price']
+                          .toString(),
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 2.h,
                   ),
-                )),
+                  itemCount: HomeCubit.get(context).cart.length),
+              spaceH(20),
+              optionCard(),
+              spaceH(20),
+              placeOrderButton(
+                  context: context,
+                  title: "PLACE THIS ORDER SR 1100.00",
+                  press: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CheckoutScren())))
+            ],
+          ) :Center(child: Text('No Products Here... Please Add Some Product',
+          style: TextStyle(
+            fontFamily: 'OpenSans',
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+            fontSize: 15
+          ),
+          )),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
@@ -94,6 +101,7 @@ class _CartBodyState extends State<CartBody> {
     required String image,
     required String name,
     required dynamic price,
+    required int id,
   }) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
@@ -143,7 +151,7 @@ class _CartBodyState extends State<CartBody> {
                 SizedBox(
                   height: 2.h,
                 ),
-                countRow(),
+                countRow(id: id),
               ],
             ),
           ),
@@ -163,63 +171,71 @@ class _CartBodyState extends State<CartBody> {
     );
   }
 
-  Widget countRow() => Row(
-        children: [
-          InkWell(
-              onTap: () {
-                setState(() {
-                  count--;
-                });
+  Widget countRow({
+  required int id,
+}) => BlocConsumer<AppCubit,AppStates>(
+     listener: (context , state){},
+  builder: (context , state){
+     return Row(
+         children: [
+           InkWell(
+               onTap: () {
 
-                if (count == 1) {
-                  setState(() {
-                    count = 1;
-                  });
-                }
-              },
-              child: Container(
-                width: 8.w,
-                height: 4.h,
-                padding: const EdgeInsets.only(bottom: 50),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: HexColor("#5A5A5A")),
-                child: Icon(
-                  Icons.minimize,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              )),
-          SizedBox(
-            width: 3.w,
-          ),
-          Text(
-            "$count",
-            style: headingStyle.copyWith(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
-                color: HexColor("#515C6F")),
-          ),
-          SizedBox(
-            width: 3.w,
-          ),
-          InkWell(
-              onTap: () {
-                setState(() {
-                  count++;
-                });
-              },
-              child: Container(
-                width: 8.w,
-                height: 4.h,
-                // padding: const EdgeInsets.only(bottom: 30),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: HexColor("#5A5A5A")),
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              )),
-        ],
-      );
+                  AppCubit.get(context).decreaseQuantity(productId: id,);
+                  print(id);
+               },
+               child: Container(
+                 width: 8.w,
+                 height: 4.h,
+                 padding: const EdgeInsets.only(bottom: 50),
+                 decoration: BoxDecoration(
+                     shape: BoxShape.circle, color: HexColor("#5A5A5A")),
+                 child: Icon(
+                   Icons.minimize,
+                   color: Colors.white,
+                   size: 20,
+                 ),
+               )),
+           SizedBox(
+             width: 3.w,
+           ),
+           (AppCubit.get(context).counter[id] != null || AppCubit.get(context).counter[id] ==0)?Text(
+
+             "${AppCubit.get(context).counter[id]}",
+             style: headingStyle.copyWith(
+                 fontSize: 13.sp,
+                 fontWeight: FontWeight.w600,
+                 color: HexColor("#515C6F")),
+           ):Text(
+             "1",
+             style: headingStyle.copyWith(
+                 fontSize: 13.sp,
+                 fontWeight: FontWeight.w600,
+                 color: HexColor("#515C6F")),
+           ),
+           SizedBox(
+             width: 3.w,
+           ),
+           InkWell(
+               onTap: () {
+
+                AppCubit.get(context).increaseQuantity(productId: id,);
+                print(id);
+               },
+               child: Container(
+                 width: 8.w,
+                 height: 4.h,
+                 // padding: const EdgeInsets.only(bottom: 30),
+                 decoration: BoxDecoration(
+                     shape: BoxShape.circle, color: HexColor("#5A5A5A")),
+                 child: Icon(
+                   Icons.add,
+                   color: Colors.white,
+                   size: 20,
+                 ),
+               )),
+         ],
+       );
+  },
+);
 }

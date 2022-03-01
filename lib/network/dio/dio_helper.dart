@@ -64,6 +64,29 @@ class DioHelper {
 
     );
   }
+  static Future<Response> postOrderData({
+    required String url,
+    Map<String,dynamic>? query,
+    required FormData data,
+    String? token,
+  }) async
+  {
+    return dio.post(
+        url,
+        queryParameters: query??null,
+        data: data,
+
+        options: Options(
+            followRedirects: false,
+            // will not throw errors
+            validateStatus: (status) => true,
+            headers: {
+              'Authorization': token,
+            }
+        )
+
+    );
+  }
 
   static Future<Response> postWishListData({
     required String url,

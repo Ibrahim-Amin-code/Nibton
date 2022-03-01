@@ -45,6 +45,10 @@ dependencies:
   pin_code_fields: ^7.3.0
   easy_localization: ^3.0.0
   share: ^2.0.4
+  google_sign_in:
+  cloud_firestore:
+  location: ^4.3.0 
+  geocoding: ^2.0.2
 
 
 

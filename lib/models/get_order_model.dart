@@ -15,7 +15,6 @@ class GetOrderModel {
       });
     }
   }
-
 }
 
 class Data {
@@ -37,6 +36,7 @@ class Data {
   dynamic billingPhone;
   String? createdAt;
   String? updatedAt;
+  Address? address;
   List<Products>? products;
 
   Data(
@@ -58,6 +58,7 @@ class Data {
         this.billingPhone,
         this.createdAt,
         this.updatedAt,
+        this.address,
         this.products});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -79,6 +80,8 @@ class Data {
     billingPhone = json['billing_phone'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    address =
+    json['address'] != null ? new Address.fromJson(json['address']) : null;
     if (json['products'] != null) {
       products = <Products>[];
       json['products'].forEach((v) {
@@ -89,35 +92,206 @@ class Data {
 
 }
 
-class Products {
+class Address {
   int? id;
-  int? orderId;
-  int? vendorBuyerId;
-  int? orderProductId;
-  int? price;
-  int? quantity;
+  int? userId;
+  String? addressName;
+  String? fullName;
+  String? email;
+  String? phone;
+  String? city;
+  String? state;
+  String? fullAddress;
   String? createdAt;
   String? updatedAt;
+  dynamic deletedAt;
+
+  Address(
+      {this.id,
+        this.userId,
+        this.addressName,
+        this.fullName,
+        this.email,
+        this.phone,
+        this.city,
+        this.state,
+        this.fullAddress,
+        this.createdAt,
+        this.updatedAt,
+        this.deletedAt});
+
+  Address.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['userId'];
+    addressName = json['address_name'];
+    fullName = json['full_name'];
+    email = json['email'];
+    phone = json['phone'];
+    city = json['city'];
+    state = json['state'];
+    fullAddress = json['full_address'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+  }
+
+
+}
+
+class Products {
+  int? id;
+  int? categoryId;
+  int? shopId;
+  int? vendorId;
+  Names? names;
+  Names? descriptions;
+  int? price;
+  int? quantity;
+  String? modalNumber;
+  String? department;
+  String? coverImg;
+  List<String>? slug;
+  int? status;
+  String? date;
+  String? size;
+  String? color;
+  dynamic createdAt;
+  dynamic updatedAt;
+  String? name;
+  String? description;
+  Vendor? vendor;
 
   Products(
       {this.id,
-        this.orderId,
-        this.vendorBuyerId,
-        this.orderProductId,
+        this.categoryId,
+        this.shopId,
+        this.vendorId,
+        this.names,
+        this.descriptions,
         this.price,
         this.quantity,
+        this.modalNumber,
+        this.department,
+        this.coverImg,
+        this.slug,
+        this.status,
+        this.date,
+        this.size,
+        this.color,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.name,
+        this.description,
+        this.vendor});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    orderId = json['order_id'];
-    vendorBuyerId = json['vendor_buyer_id'];
-    orderProductId = json['order_productId'];
+    categoryId = json['categoryId'];
+    shopId = json['shopId'];
+    vendorId = json['vendorId'];
+    names = json['names'] != null ? new Names.fromJson(json['names']) : null;
+    descriptions = json['descriptions'] != null
+        ? new Names.fromJson(json['descriptions'])
+        : null;
     price = json['price'];
     quantity = json['quantity'];
+    modalNumber = json['modal_number'];
+    department = json['department'];
+    coverImg = json['cover_img'];
+    slug = json['slug'].cast<String>();
+    status = json['status'];
+    date = json['date'];
+    size = json['size'];
+    color = json['color'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    name = json['name'];
+    description = json['description'];
+    vendor =
+    json['vendor'] != null ? new Vendor.fromJson(json['vendor']) : null;
+  }
+
+}
+
+class Names {
+  String? ar;
+  String? en;
+
+  Names({this.ar, this.en});
+
+  Names.fromJson(Map<String, dynamic> json) {
+    ar = json['ar'];
+    en = json['en'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ar'] = this.ar;
+    data['en'] = this.en;
+    return data;
+  }
+}
+
+class Vendor {
+  int? id;
+  int? countryId;
+  int? cityId;
+  dynamic stateID;
+  String? name;
+  String? email;
+  dynamic dateOfBirth;
+  String? mobile;
+  String? photo;
+  dynamic gender;
+  dynamic detail;
+  int? status;
+  String? type;
+  int? isActivated;
+  dynamic token;
+  dynamic deviceToken;
+  String? createdAt;
+  String? updatedAt;
+
+  Vendor(
+      {this.id,
+        this.countryId,
+        this.cityId,
+        this.stateID,
+        this.name,
+        this.email,
+        this.dateOfBirth,
+        this.mobile,
+        this.photo,
+        this.gender,
+        this.detail,
+        this.status,
+        this.type,
+        this.isActivated,
+        this.token,
+        this.deviceToken,
+        this.createdAt,
+        this.updatedAt});
+
+  Vendor.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    countryId = json['countryId'];
+    cityId = json['cityId'];
+    stateID = json['stateID'];
+    name = json['name'];
+    email = json['email'];
+    dateOfBirth = json['dateOfBirth'];
+    mobile = json['mobile'];
+    photo = json['photo'];
+    gender = json['gender'];
+    detail = json['detail'];
+    status = json['status'];
+    type = json['type'];
+    isActivated = json['is_activated'];
+    token = json['token'];
+    deviceToken = json['device_token'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
+
 
 }

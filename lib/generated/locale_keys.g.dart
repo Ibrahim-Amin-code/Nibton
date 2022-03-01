@@ -5,6 +5,7 @@ abstract class  LocaleKeys {
   static const SignUp = 'SignUp';
   static const Skip = 'Skip';
   static const Brands = 'Brands';
+  static const PaymentMethod = 'Payment Method';
   static const Deals = 'Deals';
   static const New_Products = 'New Products';
   static const Mostiviewed_Products = 'Mostiviewed Products';

@@ -74,7 +74,6 @@ Widget buildOffersCardRow({
     children: [
       Container(
         height: 22.h,
-        // width: 50.w,
         child: customCachedNetworkImage(url: image, context: context, fit: BoxFit.cover),
       ),
         Padding(
@@ -82,7 +81,10 @@ Widget buildOffersCardRow({
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,style: TextStyle(
+              Text(title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
                 color: HexColor('FFFFFF'),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

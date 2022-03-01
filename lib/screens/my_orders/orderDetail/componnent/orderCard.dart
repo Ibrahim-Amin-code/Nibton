@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/components/constants.dart';
+import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
 import 'package:sizer/sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -8,11 +9,17 @@ import 'package:easy_localization/easy_localization.dart';
 orderCardDetail({
   required String orderNum,
   required String totalAmount,
+  required String paymentMethod,
   required String itemsNum,
   required String orderStatus,
   required String date,
+  List? price,
 
-}) {
+}){
+  num totalPrice = 0;
+  price!.forEach((element) {
+    totalPrice += element.price * element.quantity;
+  });
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     decoration: BoxDecoration(
@@ -48,7 +55,7 @@ orderCardDetail({
                     fontWeight: FontWeight.w400,
                     color: HexColor("#333333"))),
             Text(
-              totalAmount,
+              '${totalPrice}',
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -68,6 +75,25 @@ orderCardDetail({
                     color: HexColor("#333333"))),
             Text(
               itemsNum,
+              style: headingStyle.copyWith(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w400,
+                  color: HexColor("#4CB8BA")),
+            ),
+          ],
+        ),
+        SizedBox(height: 1.5.h,),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(LocaleKeys.PaymentMethod.tr(),
+                style: headingStyle.copyWith(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w400,
+                    color: HexColor("#333333"))),
+            Text(
+              paymentMethod,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -123,6 +149,9 @@ orderCardDetail({
 productOrderDetail({
   required String price,
   required String qty,
+  required String productName,
+  required context,
+  required String image,
 }) {
   return Container(
     padding:  EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
@@ -142,12 +171,9 @@ productOrderDetail({
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          // width: 100,
+          width: 100,
           height: 13.h,
-          child: Image.asset(
-            "assets/images/Image 36.png",
-            fit: BoxFit.contain,
-          ),
+          child: customCachedNetworkImage(url: image, context: context, fit: BoxFit.contain),
         ),
         SizedBox(width: 3.w,),
         Column(
@@ -155,13 +181,14 @@ productOrderDetail({
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              "Blue Striped toped",
+             Text(
+              productName,
               style: headingStyle.copyWith(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
                   color: HexColor("#333333")),
             ),
+
             SizedBox(height: 1.5.h,),
             Text(
               "Price:  $price",
@@ -187,7 +214,12 @@ productOrderDetail({
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-paymentDetail() {
+paymentDetail(List? price) {
+  num totalPrice = 0;
+  price!.forEach((element) {
+    totalPrice += element.price * element.quantity;
+  });
+
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     decoration: BoxDecoration(
@@ -204,7 +236,7 @@ paymentDetail() {
                     fontWeight: FontWeight.w700,
                     color: HexColor("#333333"))),
             Text(
-              "SAR 355.00",
+              '$totalPrice',
               style: headingStyle.copyWith(
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w700,
