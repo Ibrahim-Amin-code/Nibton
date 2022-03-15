@@ -1,4 +1,3 @@
-
 class LoginModel {
   bool? status;
   String? msg;
@@ -25,13 +24,13 @@ class Data {
   late String photo;
   // late dynamic gender;
   // late dynamic detail;
-  late int status;
+  // late int status;
   late String type;
-  late int isActivated;
+  // late int isActivated;
   late String token;
   late String deviceToken;
-  late String createdAt;
-  late String updatedAt;
+  // late String createdAt;
+  // late String updatedAt;
 
   Data({
     required this.id,
@@ -45,13 +44,13 @@ class Data {
     required this.photo,
     // required this.gender,
     // required this.detail,
-    required this.status,
+    // required this.status,
     required this.type,
-    required this.isActivated,
+    // required this.isActivated,
     required this.token,
     required this.deviceToken,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -66,45 +65,12 @@ class Data {
     photo = json['photo'];
     // gender = json['gender'];
     // detail = json['detail'];
-    status = json['status'];
+    // status = json['status'];
     type = json['type'];
-    isActivated = json['is_activated'];
+    // isActivated = json['is_activated'];
     token = json['token'];
     deviceToken = json['device_token'];
-    createdAt = json['created_at'].toString();
-    updatedAt = json['updated_at'];
-  }
-}
-
-class Country {
-  late int id;
-  late String nameAr;
-  late String nameEn;
-  late dynamic createdAt;
-  late dynamic updatedAt;
-
-  Country(
-      {required this.id,
-      required this.nameAr,
-      required this.nameEn,
-      this.createdAt,
-      this.updatedAt});
-
-  Country.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    nameAr = json['name_ar'];
-    nameEn = json['name_en'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name_ar'] = this.nameAr;
-    data['name_en'] = this.nameEn;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
+    // createdAt = json['created_at'].toString();
+    // updatedAt = json['updated_at'];
   }
 }

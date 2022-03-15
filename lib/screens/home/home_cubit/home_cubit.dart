@@ -259,7 +259,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       var response = await http.get(
         Uri.parse(
-            'https://findfamily.net/eshop/api/buyers/product/wishlists?lang=$lang'),
+            'http://beautiheath.com/sub/eshop/api/buyers/product/wishlists?lang=$lang'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -279,13 +279,13 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  AllOffersModel allOffersModel = AllOffersModel();
+  OffersModel allOffersModel = OffersModel();
   void getAllOffers() {
     emit(AllOffersLoadingState());
     DioHelper.getData(
       url: AllOffers,
     ).then((value) {
-      allOffersModel = AllOffersModel.fromJson(value.data);
+      allOffersModel = OffersModel.fromJson(value.data);
       emit(AllOffersSuccessState());
     }).catchError((error) {
       emit(AllOffersErrorState(error.toString()));

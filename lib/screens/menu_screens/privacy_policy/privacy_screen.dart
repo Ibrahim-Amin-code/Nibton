@@ -65,7 +65,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               children: [
                 SizedBox(height: 2.h,),
                 Container(
-                  child:(lang == 'en')? Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.privacyEn,),
+                  child:(lang == 'en')? Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.privacyEn!,),
                     style: TextStyle(
                       height: 1.5,
                         fontSize: 12.5.sp,
@@ -73,7 +73,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         color: HexColor('#7E7E7E'),
                         fontFamily: 'OpenSans'
                     ),
-                  ):Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.privacyAr,),
+                  ):Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.privacyAr!,),
                     style: TextStyle(
                         height: 1.5,
                         fontSize: 12.5.sp,

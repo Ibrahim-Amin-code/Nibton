@@ -67,7 +67,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                 SizedBox(height: 2.h,),
                 Container(
                   // width: 340,
-                  child:(lang == 'en')? Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.termsEn,),
+                  child:(lang == 'en')? Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.termsEn!,),
                     style: TextStyle(
                         height: 1.5,
                         fontSize: 12.5.sp,
@@ -75,7 +75,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                         color: HexColor('#7E7E7E'),
                         fontFamily: 'OpenSans'
                     ),
-                  ): Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.termsAr,),
+                  ): Text(parseHtmlString(HomeCubit.get(context).contactModel.data!.termsAr!,),
                     style: TextStyle(
                         height: 1.5,
                         fontSize: 12.5.sp,

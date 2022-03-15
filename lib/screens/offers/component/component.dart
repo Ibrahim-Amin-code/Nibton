@@ -18,7 +18,7 @@ Widget buildOffersCard({
       Container(
         color: HexColor('#4CB8BA'),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10,top: 8,right: 10,),
+          padding: const EdgeInsets.only(left: 10,top: 8,right: 4,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

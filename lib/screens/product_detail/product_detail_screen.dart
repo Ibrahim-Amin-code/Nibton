@@ -223,9 +223,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               fontSize: 10.sp,
             ),
           ),
-          // SizedBox(height: 2.h,),
-          (widget.details.color.isNotEmpty)
-              ? Container(
+          SizedBox(height: 2.h,),
+          (widget.details.color != null) ? Container(
                   height: 10.h,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
@@ -244,25 +243,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     itemCount: (widget.details.color.length),
                   ),
-                )
-              : Container(
-                  height: 10.h,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Container(
-                      height: 10.h,
-                      width: 10.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: colors[index],
-                      ),
-                    ),
-                    separatorBuilder: (context, index) => SizedBox(
-                      width: 15,
-                    ),
-                    itemCount: colors.length,
-                  ),
-                ),
+                ) : Container(),
           SizedBox(
             height: 1.h,
           ),

@@ -211,7 +211,7 @@ Widget buildNationalDayProductsItem({
                 fontSize: 13.sp),
           ),
           SizedBox(
-            height: 1.4.h,
+            height: 1.1.h,
           ),
           Row(
             children: [
@@ -284,7 +284,7 @@ Widget buildNationalDayProductsItem({
             ],
           ),
           SizedBox(
-            height: 1.h,
+            height: 0.7.h,
           ),
           Row(
             children: [

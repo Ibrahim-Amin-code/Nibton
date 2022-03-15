@@ -10,6 +10,7 @@ import 'package:nibton_app/screens/menu_screens/profile/profile_component/profil
 import 'package:nibton_app/screens/product_detail/product_detail_screen.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
+import '../network/cache/cache_helper.dart';
 import 'components/constants.dart';
 
 class ProductsSearch extends SearchDelegate {
@@ -19,16 +20,18 @@ class ProductsSearch extends SearchDelegate {
       searchFieldStyle: TextStyle(
            fontSize: 18, fontFamily: 'Cairo'));
 
-  getSearchProduct({required String keyword}) async{
-   try{
-     var response = await http.get(Uri.parse("https://findfamily.net/eshop/api/buyers/products/search?name=$keyword"));
-     searchModel = SearchModel.fromJson(json.decode(response.body));
-     return searchModel;
-   }catch(error){
-     print("erooooooooooooor" + error.toString());
-   }
- } 
-  
+
+  getSearchProduct({required String keyword}) async {
+    try {
+      String lang = await CacheHelper.getData(key: 'lang') ?? 'ar';
+      var response = await http.get(Uri.parse(
+          "http://beautiheath.com/sub/eshop/api/buyers/products/search?name=$keyword&lang=$lang"));
+      searchModel = SearchModel.fromJson(json.decode(response.body));
+      return searchModel;
+    } catch (error) {
+      print("erooooooooooooor" + error.toString());
+    }
+  }
   
   
   @override
@@ -68,22 +71,22 @@ class ProductsSearch extends SearchDelegate {
             return ListView.builder(
                 primary: true,
                 shrinkWrap: true,
-                itemCount: searchModel.data!.length,
+                itemCount: snapshot.data.data!.length,
                 itemBuilder: (context, index) =>
                     InkWell(
-                      onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsScreen(details: searchModel.data![index],))),
+                      onTap: ()=>Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=>ProductDetailsScreen(details: snapshot.data.data![index],))),
                       child: buildSearchProduct(
                         context: context,
-                        price:searchModel.data![index].price.toString(),
-                        image:searchModel.data![index].coverImg.toString(),
-                        name:searchModel.data![index].name.toString(),
+                        price:snapshot.data.data![index].price.toString(),
+                        image:snapshot.data.data![index].coverImg.toString(),
+                        name:snapshot.data.data![index].name.toString(),
                       ),
                     ));
           }else{
             return Center(
               child: CircularProgressIndicator(),
             );
-
           }
         },
     );
@@ -170,15 +173,16 @@ class ProductsSearch extends SearchDelegate {
           return ListView.builder(
               primary: true,
               shrinkWrap: true,
-              itemCount: searchModel.data!.length,
+              itemCount: snapshot.data.data!.length,
               itemBuilder: (context, index) =>
                   InkWell(
-                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsScreen(details: searchModel.data![index],))),
+                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder:
+                        (context)=>ProductDetailsScreen(details: snapshot.data.data![index],))),
                     child: buildSearchProduct(
                       context: context,
-                      price:searchModel.data![index].price.toString(),
-                      image:searchModel.data![index].coverImg.toString(),
-                      name:searchModel.data![index].name.toString(),
+                      price:snapshot.data.data![index].price.toString(),
+                      image:snapshot.data.data![index].coverImg.toString(),
+                      name:snapshot.data.data![index].name.toString(),
                     ),
                   ));
         }else{
