@@ -41,6 +41,7 @@ dependencies:
   conditional_builder_null_safety: ^0.0.6
   cached_network_image: ^3.2.0
   html: ^0.15.0
+  my_fatoorah: ^3.0.7
   url_launcher:
   pin_code_fields: ^7.3.0
   easy_localization: ^3.0.0

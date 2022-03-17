@@ -251,6 +251,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  flutter_inappwebview:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.2"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -328,7 +335,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.3"
+    version: "0.13.4"
   http_parser:
     dependency: transitive
     description:
@@ -399,6 +406,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  my_fatoorah:
+    dependency: "direct main"
+    description:
+      name: my_fatoorah
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.7"
   nested:
     dependency: transitive
     description:
