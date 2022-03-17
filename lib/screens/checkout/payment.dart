@@ -3,11 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
-import 'package:nibton_app/network/cache/cache_helper.dart';
 
 import 'package:nibton_app/screens/cart/componnent/constant.dart';
 import 'package:nibton_app/screens/checkout/address/userAddresses.dart';
 import 'package:nibton_app/screens/checkout/placeOrder.dart';
+import 'package:nibton_app/screens/checkout/visa.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/layout/cubit/cubit.dart';
@@ -19,7 +19,7 @@ import 'package:sizer/sizer.dart';
 
 // ignore: use_key_in_widget_constructors
 class PaymentScreen extends StatefulWidget {
- static String paymentMethod = '';
+  static String paymentMethod = '';
 
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
@@ -31,55 +31,54 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return ListView(
       primary: true,
       shrinkWrap: true,
-      padding:  EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
+      padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
       children: [
         paymentTypeSelection(),
         spaceH(6.h),
-       BlocConsumer<OrderCubit,OrderState>(
-           listener: (context,state){
-             // HomeCubit.get(context).cart = [];
-             if (state is SendOrderSuccessState){
-               HomeCubit.get(context).cart.clear();
-               Navigator.push(context,
-                   MaterialPageRoute(builder: (context) => OrderSuccessScreen()));
-             }else if(state is SendOrderErrorState){
-               Fluttertoast.showToast(
-                   msg: 'Order Faild... Please Try Again Later',
-                   toastLength: Toast.LENGTH_LONG,
-                   gravity: ToastGravity.CENTER,
-                   timeInSecForIosWeb: 1,
-                   backgroundColor: Colors.red,
-                   textColor: Colors.white,
-                   fontSize: 16.0);
-             }
-           },
-         builder: (context,state){
-             return  placeOrderButton(
-                 context: context,
-                 title: LocaleKeys.CONTINUE_PAYMENT.tr(),
-                 press: () {
-                   OrderCubit.get(context).sendOrder(
-                     context: context,
-                     addressId: UserAddress.addressId.toString(),
-                     paymentMethod: PaymentScreen.paymentMethod.toString(),
-                     productId: PlaceOrder.productData,
-
-                   );
-                  });
-
-         },
-
-       )
+        BlocConsumer<OrderCubit, OrderState>(
+          listener: (context, state) {
+            // HomeCubit.get(context).cart = [];
+            if (state is SendOrderSuccessState) {
+              HomeCubit.get(context).cart.clear();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderSuccessScreen()));
+            } else if (state is SendOrderErrorState) {
+              Fluttertoast.showToast(
+                  msg: 'Order Faild... Please Try Again Later',
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          },
+          builder: (context, state) {
+            return placeOrderButton(
+                context: context,
+                title: LocaleKeys.CONTINUE_PAYMENT.tr(),
+                press: () {
+                  OrderCubit.get(context).sendOrder(
+                    context: context,
+                    addressId: UserAddress.addressId.toString(),
+                    paymentMethod: PaymentScreen.paymentMethod.toString(),
+                    productId: PlaceOrder.productData,
+                  );
+                });
+          },
+        )
       ],
     );
   }
 
   paymentTypeSelection() {
-    return BlocConsumer<AppCubit,AppStates>(
-      listener: (context,state){},
-      builder: (context,state){
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
         return Container(
-          padding:  EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
+          padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(5),
@@ -120,15 +119,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ],
                   ),
                   const Spacer(),
-                  Radio(value: 0, groupValue: AppCubit.get(context).selectedCash, onChanged: (value) {
-                    AppCubit.get(context).selectedCash = 0;
-                    AppCubit.get(context).cashSelection(selected: 0);
-                    AppCubit.get(context).selectedVisa = null;
-                    AppCubit.get(context).visaSelection(selected: null);
-                    setState(() {
-                      PaymentScreen.paymentMethod = 'cash_on_delivery';
-                    });
-                  })
+                  Radio(
+                      value: 0,
+                      groupValue: AppCubit.get(context).selectedCash,
+                      onChanged: (value) {
+                        AppCubit.get(context).selectedCash = 0;
+                        AppCubit.get(context).cashSelection(selected: 0);
+                        AppCubit.get(context).selectedVisa = null;
+                        AppCubit.get(context).visaSelection(selected: null);
+                        setState(() {
+                          PaymentScreen.paymentMethod = 'cash_on_delivery';
+                        });
+                      })
                 ],
               ),
               spaceH(10),
@@ -164,13 +166,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ],
                   ),
                   const Spacer(),
-                  Radio(value: 1, groupValue: AppCubit.get(context).selectedVisa, onChanged: (value) {
-                    AppCubit.get(context).selectedVisa = 1;
-                    AppCubit.get(context).visaSelection(selected: 1);
-                    AppCubit.get(context).selectedCash = null;
-                    AppCubit.get(context).cashSelection(selected: null);
-                    PaymentScreen.paymentMethod = 'master_card';
-                  })
+                  Radio(
+                      value: 1,
+                      groupValue: AppCubit.get(context).selectedVisa,
+                      onChanged: (value) {
+                        AppCubit.get(context).selectedVisa = 1;
+                        AppCubit.get(context).visaSelection(selected: 1);
+                        AppCubit.get(context).selectedCash = null;
+                        AppCubit.get(context).cashSelection(selected: null);
+                        PaymentScreen.paymentMethod = 'master_card';
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VisaScreen()));
+                      })
                 ],
               ),
             ],
