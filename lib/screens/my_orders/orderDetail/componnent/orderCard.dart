@@ -5,20 +5,17 @@ import 'package:nibton_app/screens/menu_screens/profile/profile_component/profil
 import 'package:sizer/sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 orderCardDetail({
   required String orderNum,
-  required String totalAmount,
   required String paymentMethod,
   required String itemsNum,
   required String orderStatus,
   required String date,
   List? price,
-
-}){
+}) {
   num totalPrice = 0;
   price!.forEach((element) {
-    totalPrice += element.price * element.quantity;
+    totalPrice += num.parse(element['price']) * num.parse(element['quantity']);
   });
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -44,7 +41,9 @@ orderCardDetail({
             ),
           ],
         ),
-        SizedBox(height: 1.5.h,),
+        SizedBox(
+          height: 1.5.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,7 +62,9 @@ orderCardDetail({
             ),
           ],
         ),
-        SizedBox(height: 1.5.h,),
+        SizedBox(
+          height: 1.5.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,7 +83,9 @@ orderCardDetail({
             ),
           ],
         ),
-        SizedBox(height: 1.5.h,),
+        SizedBox(
+          height: 1.5.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +104,9 @@ orderCardDetail({
             ),
           ],
         ),
-        SizedBox(height: 1.5.h,),
+        SizedBox(
+          height: 1.5.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +125,9 @@ orderCardDetail({
             ),
           ],
         ),
-        SizedBox(height: 1.5.h,),
+        SizedBox(
+          height: 1.5.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,7 +161,7 @@ productOrderDetail({
   required String image,
 }) {
   return Container(
-    padding:  EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
+    padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 3.w),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: Colors.white,
@@ -173,23 +180,31 @@ productOrderDetail({
         SizedBox(
           width: 100,
           height: 13.h,
-          child: customCachedNetworkImage(url: image, context: context, fit: BoxFit.contain),
+          child: customCachedNetworkImage(
+              url: image, context: context, fit: BoxFit.contain),
         ),
-        SizedBox(width: 3.w,),
+        SizedBox(
+          width: 3.w,
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-             Text(
-              productName,
-              style: headingStyle.copyWith(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: HexColor("#333333")),
+            SizedBox(
+              width: 200,
+              child: Text(
+                productName,
+                overflow: TextOverflow.ellipsis,
+                style: headingStyle.copyWith(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600,
+                    color: HexColor("#333333")),
+              ),
             ),
-
-            SizedBox(height: 1.5.h,),
+            SizedBox(
+              height: 1.5.h,
+            ),
             Text(
               "Price:  $price",
               style: headingStyle.copyWith(
@@ -197,7 +212,9 @@ productOrderDetail({
                   fontWeight: FontWeight.w600,
                   color: HexColor("#4CB8BA")),
             ),
-            SizedBox(height: 1.5.h,),
+            SizedBox(
+              height: 1.5.h,
+            ),
             Text(
               "Qty:  $qty",
               style: headingStyle.copyWith(
@@ -217,7 +234,7 @@ productOrderDetail({
 paymentDetail(List? price) {
   num totalPrice = 0;
   price!.forEach((element) {
-    totalPrice += element.price * element.quantity;
+    totalPrice += num.parse(element['price']) * num.parse(element['quantity']);
   });
 
   return Container(
@@ -244,8 +261,9 @@ paymentDetail(List? price) {
             ),
           ],
         ),
-        SizedBox(height: 1.h,),
-
+        SizedBox(
+          height: 1.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -264,7 +282,9 @@ paymentDetail(List? price) {
             ),
           ],
         ),
-        SizedBox(height: 1.h,),
+        SizedBox(
+          height: 1.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -283,7 +303,9 @@ paymentDetail(List? price) {
             ),
           ],
         ),
-        SizedBox(height: 1.h,),
+        SizedBox(
+          height: 1.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -302,7 +324,9 @@ paymentDetail(List? price) {
             ),
           ],
         ),
-        SizedBox(height: 1.h,),
+        SizedBox(
+          height: 1.h,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/cart/cart.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
+import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
 import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
 import 'package:nibton_app/screens/product_detail/product_detail_component/product_description.dart';
 import 'package:nibton_app/screens/product_detail/product_detail_component/product_detail_component.dart';
@@ -20,6 +21,8 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  int counter = 1;
+
   @override
   Widget build(BuildContext context) {
     List<Color> colors = [
@@ -204,7 +207,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           buildAddToCartRow(
               context: context,
               price: widget.details.price.toString(),
+              quantity: counter,
               id: widget.details.id.toString()),
+
           //id: HomeCubit.get(context).getProductsModel.data![index].id.toString()
           SizedBox(
             height: 2.h,
@@ -223,8 +228,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               fontSize: 10.sp,
             ),
           ),
-          SizedBox(height: 2.h,),
-          (widget.details.color != null) ? Container(
+          SizedBox(
+            height: 2.h,
+          ),
+          (widget.details.color != null)
+              ? Container(
                   height: 10.h,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
@@ -243,7 +251,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     itemCount: (widget.details.color.length),
                   ),
-                ) : Container(),
+                )
+              : Container(),
           SizedBox(
             height: 1.h,
           ),
@@ -335,4 +344,82 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
+
+  Widget buildAddToWishListRow({
+    context,
+    required String id,
+  }) =>
+      Row(
+        children: [
+          InkWell(
+            onTap: () {
+              setState(() {
+                counter--;
+              });
+              if (counter <= 1) {
+                setState(() {
+                  counter = 1;
+                });
+              }
+            },
+            child: CircleAvatar(
+              backgroundColor: HexColor('#5A5A5A'),
+              radius: 20,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Icon(
+                  Icons.minimize,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 3.w,
+          ),
+          Text(
+            '$counter',
+            style: TextStyle(
+              fontSize: 22,
+              color: HexColor('#6A6A69'),
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(
+            width: 3.w,
+          ),
+          InkWell(
+            onTap: () {
+              if (counter < num.parse(widget.details.quantity)) {
+                setState(() {
+                  counter++;
+                });
+              } else {
+                setState(() {
+                  counter = counter;
+                });
+              }
+            },
+            child: CircleAvatar(
+              backgroundColor: HexColor('#5A5A5A'),
+              radius: 20,
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Spacer(),
+          InkWell(
+              onTap: () {
+                HomeCubit.get(context).addToWishList(id: id);
+              },
+              child: (widget.details.wishlist == false)
+                  ? buildAddToCartAndWishListContainer(
+                      title: LocaleKeys.ADD_WISH.tr(),
+                    )
+                  : SizedBox()),
+        ],
+      );
 }

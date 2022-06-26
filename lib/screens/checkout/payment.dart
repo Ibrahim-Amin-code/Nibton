@@ -54,6 +54,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   textColor: Colors.white,
                   fontSize: 16.0);
             }
+            /**eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iZWF1dGloZWF0aC5jb21cL3N1YlwvZXNob3BcL2FwaVwvYnV5ZXJzXC9sb2dpbiIsImlhdCI6MTY1NTk0MjY3MCwiZXhwIjoxNjU1OTQ2MjcwLCJuYmYiOjE2NTU5NDI2NzAsImp0aSI6ImI5emJjUHJaRnUwVmVxSDEiLCJzdWIiOjQ2LCJwcnYiOiJhMDk0MDIzMzU0YTRkOTIyYTZiYzcxMGNkZmJlMWE3NGZiYTMwNGU2In0.Zqb7ZZnkEkBtuGWrzsra9A9OF9CkKgzc1_C_MsqVI54 */
           },
           builder: (context, state) {
             return placeOrderButton(
@@ -64,7 +65,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     context: context,
                     addressId: UserAddress.addressId.toString(),
                     paymentMethod: PaymentScreen.paymentMethod.toString(),
-                    productId: PlaceOrder.productData,
+                    productId: HomeCubit.get(context).cart,
                   );
                 });
           },

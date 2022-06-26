@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/cart/cart.dart';
 import 'package:nibton_app/screens/cart/componnent/constant.dart';
 import 'package:nibton_app/screens/checkout/address/address.dart';
+import 'package:nibton_app/screens/checkout/checkout.dart';
 import 'package:nibton_app/screens/checkout/checkout_cubit/checkout_cubit.dart';
+import 'package:nibton_app/screens/checkout/checkout_cubit/states.dart';
 import 'package:nibton_app/screens/components/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -101,19 +104,30 @@ class _AddNewaddressScreenState extends State<AddNewaddressScreen> {
                     type: TextInputType.phone,
                     secure: false),
                 spaceH(30),
-                placeOrderButton(
-                    context: context, title: LocaleKeys.Add_Address.tr(), press: () {
-                  CheckoutCubit.get(context).addAddress(
-                      addressName: addressTtile.text.toString(),
-                      addressId: '',
-                      fullAddress: detail.text.toString(),
-                      fullName: fullName.text.toString(),
-                      email: email.text.toString(),
-                      phone: phoneNumber.text.toString(),
-                      city: city.text.toString(),
-                      state: district.text.toString());
-                  CheckoutCubit.get(context).getAddresses();
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
+                BlocConsumer<CheckoutCubit, CheckoutState>(
+                    builder: (context, state) => placeOrderButton(
+                        context: context,
+                        title: LocaleKeys.Add_Address.tr(),
+                        press: () {
+                          CheckoutCubit.get(context).addAddress(
+                              addressName: addressTtile.text.toString(),
+                              addressId: '',
+                              fullAddress: detail.text.toString(),
+                              fullName: fullName.text.toString(),
+                              email: email.text.toString(),
+                              phone: phoneNumber.text.toString(),
+                              city: city.text.toString(),
+                              state: district.text.toString());
+                        }),
+                    listener: (context, state) {
+                      if (state is AddAddressSuccessState) {
+                        CheckoutCubit.get(context).getAddresses();
+
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CheckoutScren()));
+                      }
                     })
               ],
             ))

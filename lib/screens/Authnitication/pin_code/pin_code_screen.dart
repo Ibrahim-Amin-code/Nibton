@@ -42,8 +42,10 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       final User? user =
           (await firebaseAuth.signInWithCredential(credential)).user;
       if (user!.uid != '' || user.uid != null) {
-
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => AuthniticationScreen()), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => AuthniticationScreen()),
+            (route) => false);
         //
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => AuthniticationScreen()));
@@ -235,13 +237,13 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 height: 50,
                 child: TextButton(
                   onPressed: () {
-
-                    if(formKey.currentState!.validate()){
+                    if (formKey.currentState!.validate()) {
                       signInWithPhoneNumber();
                     }
                     // conditions for validating
                     if (currentText.length == 6) {
-                      errorController!.add(ErrorAnimationType.shake); // Triggering error shake animation
+                      errorController!.add(ErrorAnimationType
+                          .shake); // Triggering error shake animation
                       setState(() {
                         hasError = true;
                       });

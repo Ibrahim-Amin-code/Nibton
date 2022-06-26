@@ -131,6 +131,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void addToCart({
     required String id,
+    required int quantity,
   }) async {
     emit(AddToCartLoadingState());
     String token = await CacheHelper.getData(key: 'token');
@@ -138,6 +139,7 @@ class HomeCubit extends Cubit<HomeState> {
       url: AddToCart,
       data: {
         "productId": id,
+        "quantity": quantity,
       },
       token: 'Bearer $token',
     ).then((value) {
@@ -268,10 +270,10 @@ class HomeCubit extends Cubit<HomeState> {
       wishListModel = WishListModel.fromJson(json.decode(response.body));
       var data = json.decode(response.body);
       wish.addAll(data['data']);
-
-      print(
-          'wishListModel----------------------------------------------------------------------------------' +
-              response.body);
+      for (var item in data['data']) {
+        isFavourite['${item['id']}'] = true;
+        emit(GetWishListSuccessState());
+      }
       emit(GetWishListSuccessState());
     } catch (error) {
       emit(GetWishListErrorState(error.toString()));

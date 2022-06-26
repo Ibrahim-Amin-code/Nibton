@@ -42,8 +42,10 @@ class EditProfileScreen extends StatelessWidget {
 
                     ],
                   ),)),
+      
             body: ConditionalBuilder(
-              condition:  state is! GetProfiledLoadingState && GetProfileCubit.get(context).data['status'] != false,
+              condition:  state is! GetProfiledLoadingState && 
+              GetProfileCubit.get(context).data['status'] != false,
               fallback: (context) => Center(child: CircularProgressIndicator()),
               builder: (context) =>ListView(
                 padding: EdgeInsets.symmetric(horizontal: 5.w),

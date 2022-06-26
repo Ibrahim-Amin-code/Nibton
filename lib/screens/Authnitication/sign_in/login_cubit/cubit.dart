@@ -33,7 +33,7 @@ class LoginCubit extends Cubit<LoginStates> {
       url: Login,
     ).then((value) async {
       loginModel = LoginModel.fromJson(value.data);
-      CacheHelper.saveData(value: loginModel.data!.token, key: 'token');
+      CacheHelper.saveData(value: loginModel.data!.token, key: 'token') ?? '';
       CacheHelper.saveData(value: loginModel.data!.name, key: 'username');
       CacheHelper.saveData(
           value: loginModel.data!.id.toString(), key: 'userID');
@@ -41,6 +41,8 @@ class LoginCubit extends Cubit<LoginStates> {
           '========================================================= ${loginModel.msg}=');
       print(
           '========================================================= ${loginModel.data!.token}=');
+      print(
+          '========================================================= ${loginModel.data!.id}=');
 
       emit(LoginSuccessState());
     }).catchError((error) {
@@ -51,6 +53,10 @@ class LoginCubit extends Cubit<LoginStates> {
           'error----------------------------------------------${error.toString()}');
     });
   }
+
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 

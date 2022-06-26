@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,60 +19,79 @@ class OrderCubit extends Cubit<OrderState> {
   static OrderCubit get(context) => BlocProvider.of(context);
 
   GetOrderModel getOrderModel = GetOrderModel();
+  List orders = [];
 
-  void getOrders()async{
+  void getOrders() async {
     emit(OrderLoadingState());
     String token = await CacheHelper.getData(key: 'token');
-    DioHelper.getData(
-      url: GetOrder,
-      token: 'Bearer $token',
-    ).then((value) {
-      getOrderModel = GetOrderModel.fromJson(value.data);
-      print(value.data);
-      emit(OrderSuccessState());
-    }).catchError((error){
-      print('error-----------------------------'+ error.toString());
-      emit(OrderErrorState(error.toString()));
-    });
-  }
-  void sendOrder({
-  required String  addressId,
-  required String  paymentMethod,
-  required List  productId,
-  required context,
-  })async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String lang = preferences.getString('lang') ??'en';
-    final String buyerId= preferences.getString('userID').toString();
-    List<Map> productsOptions = [];
-    productId.forEach((element) {
-      productsOptions.add(
-        {
-          "id":element['id'],
-          "quantity" : AppCubit.get(context).counter[element['id']],
-          "price" : element['price'],
-        }
-
+    try {
+      var response = await http.get(
+        Uri.parse(
+            'http://beautiheath.com/sub/eshop/api/buyers/get-buyer-order'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
       );
-    });
-     var product = json.encode(productsOptions);
-     print(product);
+      orders.clear();
+      getOrderModel = GetOrderModel.fromJson(json.decode(response.body));
+      var data = json.decode(response.body);
+      orders.addAll(data['data']);
 
-    FormData formData = FormData.fromMap({
-      'lang':lang,
-      'buyerId':buyerId,
-      'addressId':addressId,
-      'payment_method':paymentMethod,
-      'productId':product,
+      print(
+          'wishListModel----------------------------------------------------------------------------------' +
+              response.body);
+      emit(OrderSuccessState());
+    } catch (error) {
+      print(error.toString());
+
+      emit(OrderErrorState(error.toString()));
+    }
+  }
+
+  void sendOrder({
+    required String addressId,
+    required String paymentMethod,
+    required List productId,
+    required context,
+  }) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final String lang = preferences.getString('lang') ?? 'en';
+    final String buyerId = preferences.getString('userID').toString();
+    List<Map<String, dynamic>> productsOptions = [];
+    productId.forEach((element) {
+      productsOptions.add({
+        "id": element['id'],
+        "quantity": 2,
+        "price": element['price'],
       });
+    });
+    // var product = json.encode(productsOptions);
+    print('productttttttttttttttttttttttttttttttttttttttttttt');
 
+    print(buyerId);
+
+    var formData = FormData.fromMap({
+      'lang': lang,
+      'buyerId': buyerId,
+      'addressId': addressId,
+      'payment_method': paymentMethod,
+      'productId': productsOptions,
+    });
+    print(formData);
     emit(SendOrderLoadingState());
-    DioHelper.postOrderData(url: SendOrder,
-    data: formData,
+    DioHelper.postOrderData(
+      url: SendOrder,
+      data: formData,
     ).then((value) {
+      print('FFFFFFFFFFFFFFFFFFFFFFggggggggggggggggggggggg');
+
+      print(addressId +
+          'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+      print('value.dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
       print(value.data);
       emit(SendOrderSuccessState());
-    }).catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(SendOrderErrorState(error.toString()));
     });
@@ -104,7 +124,5 @@ class OrderCubit extends Cubit<OrderState> {
   //     emit(RegisterErrorState(error.toString()));
   //   });
   // }
-
-
 
 }

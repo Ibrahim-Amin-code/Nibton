@@ -191,8 +191,9 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
+
               SizedBox(
-                  height: 33.h,
+                  height: 20.h,
                   child: ListView.separated(
                       padding: EdgeInsets.symmetric(horizontal: 3.w),
                       shrinkWrap: true,
@@ -216,22 +217,23 @@ class HomeScreen extends StatelessWidget {
                                   .data![index]
                                   .coverImg
                                   .toString(),
-                              price: HomeCubit.get(context)
-                                  .allOffersModel
-                                  .data![index]
-                                  .price
-                                  .toString(),
-                              newPrice: HomeCubit.get(context)
-                                  .allOffersModel
-                                  .data![index]
-                                  .offer!
-                                  .price
-                                  .toString(),
-                              title: HomeCubit.get(context)
-                                  .allOffersModel
-                                  .data![index]
-                                  .name
-                                  .toString(),
+
+                              // price: HomeCubit.get(context)
+                              //     .allOffersModel
+                              //     .data![index]
+                              //     .price
+                              //     .toString(),
+                              // newPrice: HomeCubit.get(context)
+                              //     .allOffersModel
+                              //     .data![index]
+                              //     .offer!
+                              //     .price
+                              //     .toString(),
+                              // title: HomeCubit.get(context)
+                              //     .allOffersModel
+                              //     .data![index]
+                              //     .name
+                              //     .toString(),
                             ),
                           ),
                       separatorBuilder: (context, index) => SizedBox(

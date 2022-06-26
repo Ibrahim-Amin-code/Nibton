@@ -11,7 +11,6 @@ import 'package:nibton_app/screens/menu_screens/resetPassword/resetPass.dart';
 import 'package:sizer/sizer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 class ForgetPassBody extends StatefulWidget {
   const ForgetPassBody({Key? key}) : super(key: key);
 
@@ -24,9 +23,10 @@ class _ForgetPassBodyState extends State<ForgetPassBody> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ForgetPasswordCubit,ForgetPasswordStates>(
-      listener: (context,state){
-        if(ForgetPasswordCubit.get(context).status == true && state is ForgetPasswordSuccessState ){
+    return BlocConsumer<ForgetPasswordCubit, ForgetPasswordStates>(
+      listener: (context, state) {
+        if (ForgetPasswordCubit.get(context).status == true &&
+            state is ForgetPasswordSuccessState) {
           Fluttertoast.showToast(
               msg: ForgetPasswordCubit.get(context).message.toString(),
               toastLength: Toast.LENGTH_LONG,
@@ -35,23 +35,25 @@ class _ForgetPassBodyState extends State<ForgetPassBody> {
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
-
-        }else if(ForgetPasswordCubit.get(context).status ==false && state is ForgetPasswordSuccessState ){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => ResetPasswordScreen()));
+        } else if (ForgetPasswordCubit.get(context).status == false &&
+            state is ForgetPasswordSuccessState) {
           Fluttertoast.showToast(
-          msg: ForgetPasswordCubit.get(context).message.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
-      }
+              msg: ForgetPasswordCubit.get(context).message.toString(),
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
       },
-      builder: (context,state){
+      builder: (context, state) {
         return ListView(
           primary: true,
           shrinkWrap: true,
-          padding:  EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
+          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,9 +63,10 @@ class _ForgetPassBodyState extends State<ForgetPassBody> {
                 Center(child: Image.asset('assets/images/logo.png')),
                 spaceH(40),
                 Container(
-                  padding:  EdgeInsets.symmetric(vertical: 3.h, horizontal: 4.w),
+                  padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 4.w),
                   decoration: BoxDecoration(
-                      color: Colors.white, borderRadius: BorderRadius.circular(5)),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
                   child: Form(
                     key: formKey,
                     child: Column(
@@ -105,24 +108,24 @@ class _ForgetPassBodyState extends State<ForgetPassBody> {
                           ),
                         ),
                         spaceH(30),
-                        phoneEmailTextfield(
-                            validator: (value){
-                              if(value!.isNotEmpty){
-                                return null;
-                              }else{
-                                return LocaleKeys.PleaseEnter.tr();
-                              }
-                            }
-                        ),
+                        phoneEmailTextfield(validator: (value) {
+                          if (value!.isNotEmpty) {
+                            return null;
+                          } else {
+                            return LocaleKeys.PleaseEnter.tr();
+                          }
+                        }),
                         spaceH(30),
                         SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: DefaultButton(
                                 text: LocaleKeys.Change_Password.tr(),
                                 press: () {
-
-                                  ForgetPasswordCubit.get(context).userForgetPassword(email: email.text.toString(), lang: 'ar',);
-
+                                  ForgetPasswordCubit.get(context)
+                                      .userForgetPassword(
+                                    email: email.text.toString(),
+                                    lang: 'ar',
+                                  );
                                 }))
                       ],
                     ),
@@ -138,7 +141,6 @@ class _ForgetPassBodyState extends State<ForgetPassBody> {
 
   phoneEmailTextfield({
     required FormFieldValidator<String>? validator,
-
   }) {
     return TextFormField(
       controller: email,

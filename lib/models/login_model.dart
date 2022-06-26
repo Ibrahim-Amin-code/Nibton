@@ -61,7 +61,7 @@ class Data {
     name = json['name'];
     email = json['email'];
     // dateOfBirth = json['dateOfBirth'];
-    mobile = json['mobile'];
+    mobile = json['mobile'] ?? '';
     photo = json['photo'];
     // gender = json['gender'];
     // detail = json['detail'];

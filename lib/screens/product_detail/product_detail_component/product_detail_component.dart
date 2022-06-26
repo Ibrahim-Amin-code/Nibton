@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 Widget buildAddToCartAndWishListContainer({
   required String title,
-}) => Container(
+}) =>
+    Container(
       height: 5.h,
       width: 50.w,
       padding: EdgeInsets.symmetric(horizontal: 2.w),
@@ -49,55 +51,13 @@ Widget buildAddToCartAndWishListContainer({
       ),
     );
 
-Widget buildAddToWishListRow({
+Widget buildAddToCartRow({
   context,
-  required String id,}) =>
+  required String price,
+  required String id,
+  required int quantity,
+}) =>
     Row(
-      children: [
-        CircleAvatar(
-          backgroundColor: HexColor('#5A5A5A'),
-          radius: 20,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 50),
-            child: Icon(
-              Icons.minimize,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 3.w,
-        ),
-        Text(
-          '01',
-          style: TextStyle(
-            fontSize: 22,
-            color: HexColor('#6A6A69'),
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(
-          width: 3.w,
-        ),
-        CircleAvatar(
-          backgroundColor: HexColor('#5A5A5A'),
-          radius: 20,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ),
-        Spacer(),
-        InkWell(
-            onTap: (){
-              HomeCubit.get(context).addToWishList(id: id);
-            },
-            child: buildAddToCartAndWishListContainer(title: LocaleKeys.ADD_WISH.tr(),)),
-      ],
-    );
-
-Widget buildAddToCartRow({context, required String price,required String id,}) => Row(
       children: [
         Text(
           //Availability: In Stock
@@ -139,9 +99,7 @@ Widget buildAddToCartRow({context, required String price,required String id,}) =
         Spacer(),
         InkWell(
             onTap: () {
-              HomeCubit.get(context).addToCart(id: id);
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => CartScreen()));
+              HomeCubit.get(context).addToCart(id: id, quantity: quantity);
             },
             child: buildAddToCartAndWishListContainer(
               title: LocaleKeys.ADD_CART.tr(),
@@ -160,7 +118,7 @@ Widget buildSeeAllButton() => Container(
       child: Row(
         children: [
           Padding(
-            padding:  EdgeInsets.only(left: 40.w),
+            padding: EdgeInsets.only(left: 40.w),
             child: Text(
               LocaleKeys.See_All.tr(),
               style: TextStyle(
@@ -187,10 +145,11 @@ Widget buildSeeAllButton() => Container(
       ),
     );
 
-
-
-
-Widget buildRatingBarRow({context,required String id,}) => Row(
+Widget buildRatingBarRow({
+  context,
+  required String id,
+}) =>
+    Row(
       children: [
         RatingBar.builder(
           initialRating: 3,
@@ -212,9 +171,15 @@ Widget buildRatingBarRow({context,required String id,}) => Row(
           width: 3.w,
         ),
         InkWell(
-          onTap: (){
+          onTap: () {
             HomeCubit.get(context).getReviews(id: id);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>ReviewScreen(id: id,)),);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ReviewScreen(
+                        id: id,
+                      )),
+            );
           },
           child: Text(
             '1 ${LocaleKeys.Review.tr()} ',
@@ -230,7 +195,13 @@ Widget buildRatingBarRow({context,required String id,}) => Row(
           width: 1.w,
         ),
         InkWell(
-          onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>WriteReviewScreen(iD: id,)),),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WriteReviewScreen(
+                      iD: id,
+                    )),
+          ),
           child: Text(
             '| ${LocaleKeys.Write_Review.tr()}',
             style: TextStyle(

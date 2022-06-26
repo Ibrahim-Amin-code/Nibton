@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nibton_app/generated/locale_keys.g.dart';
 import 'package:nibton_app/screens/home/home_component/home_component.dart';
 import 'package:nibton_app/screens/home/home_cubit/home_cubit.dart';
+import 'package:nibton_app/screens/home/home_cubit/states.dart';
 import 'package:nibton_app/screens/menu_screens/profile/profile_component/profile_component.dart';
 import 'package:sizer/sizer.dart';
 
@@ -200,25 +202,32 @@ Widget buildSeeAllProductsItem({
             padding: EdgeInsets.only(right: 1.w, left: 1.w),
             child: Row(
               children: [
-                InkWell(
-                    onTap: () {
-                      HomeCubit.get(context).addToWishList(id: id);
-                    },
-                    child:
-                        // ignore: unrelated_type_equality_checks
-                        (HomeCubit.get(context).isFavourite[id] == false)
-                            ? Icon(
-                                Icons.favorite_outline,
-                                color: Colors.yellow,
-                              )
-                            : Icon(
-                                Icons.favorite,
-                                color: Colors.yellow,
-                              )),
+                BlocConsumer<HomeCubit, HomeState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return InkWell(
+                        onTap: () {
+                          HomeCubit.get(context).addToWishList(id: id);
+                        },
+                        child:
+                            // ignore: unrelated_type_equality_checks
+                            (HomeCubit.get(context).isFavourite[id] == false ||
+                                    HomeCubit.get(context).isFavourite[id] ==
+                                        null)
+                                ? Icon(
+                                    Icons.favorite_outline,
+                                    color: Colors.yellow,
+                                  )
+                                : Icon(
+                                    Icons.favorite,
+                                    color: Colors.yellow,
+                                  ));
+                  },
+                ),
                 Spacer(),
                 InkWell(
                   onTap: () {
-                    HomeCubit.get(context).addToCart(id: id);
+                    HomeCubit.get(context).addToCart(id: id, quantity: 1);
                   },
                   child: Container(
                     width: 28.w,

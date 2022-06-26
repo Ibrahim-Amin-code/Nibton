@@ -75,10 +75,13 @@ class _UserAddressState extends State<UserAddress> {
                                 Radio(
                                     activeColor: HexColor("#4CB8BA"),
                                     value: index,
-                                    groupValue: AppCubit.get(context).selectedItem,
+                                    groupValue:
+                                        AppCubit.get(context).selectedItem,
                                     onChanged: (value) {
-                                      AppCubit.get(context).selectedItem = index;
-                                      AppCubit.get(context).addressSelection(selected: index);
+                                      AppCubit.get(context).selectedItem =
+                                          index;
+                                      AppCubit.get(context)
+                                          .addressSelection(selected: index);
                                       setState(() {
                                         UserAddress.name =
                                             CheckoutCubit.get(context)
@@ -98,8 +101,18 @@ class _UserAddressState extends State<UserAddress> {
                                                 .data![index]
                                                 .city
                                                 .toString();
-                                        UserAddress.state = CheckoutCubit.get(context).getAddressModel.data![index].state.toString();
-                                        UserAddress.addressId = CheckoutCubit.get(context).getAddressModel.data![index].id.toString();
+                                        UserAddress.state =
+                                            CheckoutCubit.get(context)
+                                                .getAddressModel
+                                                .data![index]
+                                                .state
+                                                .toString();
+                                        UserAddress.addressId =
+                                            CheckoutCubit.get(context)
+                                                .getAddressModel
+                                                .data![index]
+                                                .id
+                                                .toString();
                                       });
                                     })
                               ],
